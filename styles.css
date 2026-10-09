@@ -82,13 +82,21 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .pill-blue { width: 112px; height: 32px; padding: 0 12px; background: var(--blue); color: #fff; line-height: 16px; }
 
 /* ---------- hero ---------- */
-/* Compact invite banner: a slim header strip so the products get the screen. */
-.hero { position: relative; display: flex; align-items: center; justify-content: center; height: 406px; background: #000; overflow: hidden; clip-path: inset(0 0 2px 0); padding: 89px 0 126px; }
-.hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; padding: 0 16px; text-align: center; color: #fff; }
+.hero { position: relative; height: clamp(600px, calc(100svh + 10px), 770px); background: #000; overflow: hidden; clip-path: inset(0 0 2px 0); padding-top: 92px; }
+.hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: clamp(60px, 14svh, 170px) 16px 0; text-align: center; color: #fff; }
+.icon-draw { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.hero-mark { position: relative; display: block; width: 32.5px; height: 23.5px; }
 /* Silver highlight clipped to the icon shape; each one rides in with the gradient pass it belongs to. */
-.hero h1 { font-size: 44px; font-weight: 500; line-height: 48px; letter-spacing: -1.1px; }
-.hero h1 br { display: none; } /* one line on wide screens */
-.hero-sub { font-size: 17px; line-height: normal; margin-top: 2px; }
+/* The icon plays one intro only: a soft diagonal wipe growing out of the top-left corner. After that it is completely static. */
+.icon-draw {
+  -webkit-mask-image: linear-gradient(135deg, #000 0, #000 42%, transparent 58%); mask-image: linear-gradient(135deg, #000 0, #000 42%, transparent 58%);
+  -webkit-mask-size: 320% 320%; mask-size: 320% 320%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: 100% 100%; mask-position: 100% 100%;
+  animation: icon-wipe 2s cubic-bezier(.3, .45, .3, 1) .2s forwards;
+}
+@keyframes icon-wipe { to { -webkit-mask-position: 0% 0%; mask-position: 0% 0%; } }
+.hero h1 { font-size: 80px; font-weight: 500; line-height: 80px; letter-spacing: -2px; }
+.hero-sub { font-size: 24px; line-height: normal; margin-top: 11px; }
 /* Sweeping gradient: slides in from the right on load, then loops out and back in.
    The layer is wider/taller than the hero and masked so every edge feathers to black. */
 /* Organic motion: both colour masses stay in place and slowly wander. Position, tilt and size each run on their own
@@ -118,7 +126,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .aurora.from-left { transform: scaleX(-1); animation: drift-y 9s ease-in-out -7s infinite alternate-reverse, drift-tilt 15s ease-in-out -12s infinite alternate-reverse, drift-size 13s ease-in-out -8s infinite alternate; }
 /* Bottom of the hero dissolves into the grey of the pricing section (smootherstep ramp, so there is no visible start or end line); the cards sit above this layer. */
 .hero::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 150px; pointer-events: none; z-index: 0;
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: clamp(180px, 42%, 300px); pointer-events: none; z-index: 0;
   background: linear-gradient(to bottom, rgba(238,238,238,0.000) 0%, rgba(238,238,238,0.001) 5%, rgba(238,238,238,0.009) 10%, rgba(238,238,238,0.027) 15%, rgba(238,238,238,0.058) 20%, rgba(238,238,238,0.104) 25%, rgba(238,238,238,0.163) 30%, rgba(238,238,238,0.235) 35%, rgba(238,238,238,0.317) 40%, rgba(238,238,238,0.407) 45%, rgba(238,238,238,0.500) 50%, rgba(238,238,238,0.593) 55%, rgba(238,238,238,0.683) 60%, rgba(238,238,238,0.765) 65%, rgba(238,238,238,0.837) 70%, rgba(238,238,238,0.896) 75%, rgba(238,238,238,0.942) 80%, rgba(238,238,238,0.973) 85%, rgba(238,238,238,0.991) 90%, rgba(238,238,238,0.999) 95%, rgba(238,238,238,1.000) 100%);
 }
 .scrim { position: absolute; inset: 0; background: linear-gradient(rgba(0, 0, 0, .35), transparent 38%); pointer-events: none; }
@@ -154,13 +162,12 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @keyframes drift-y { from { translate: 0 -9%; } to { translate: 0 9%; } }
 @keyframes drift-tilt { from { rotate: -9deg; } to { rotate: 9deg; } }
 @keyframes drift-size { from { scale: .96; } to { scale: 1.2; } }
-@media (prefers-reduced-motion: reduce) { .aurora, .aurora-wrap { animation: none; } .aurora.from-left { display: none; } }
+@media (prefers-reduced-motion: reduce) { .aurora, .aurora-wrap { animation: none; } .icon-draw { animation: none; -webkit-mask-position: 0 0; mask-position: 0 0; } .aurora.from-left { display: none; } }
 
 /* ---------- rings ---------- */
 /* The cards rise into the lower part of the hero so they're already in view on landing. */
 /* 128px of breathing room above and below the cards. The top 128px (plus the 90px peek) overlaps the hero's fade, so the cards still show on landing. */
-/* The banner's gradient runs 130px further down, behind the cards (they sit on top of it), then fades out. 128px of air below the cards. */
-.rings { position: relative; margin-top: -216px; padding: 110px 0 128px; background: linear-gradient(to bottom, rgba(238,238,238,0) 212px, #eee 218px); }
+.rings { position: relative; margin-top: -218px; padding: 128px 0; background: linear-gradient(to bottom, rgba(238,238,238,0) 214px, #eee 220px); }
 .cards { display: grid; grid-template-columns: repeat(2, 364px); gap: 24px; justify-content: center; max-width: 784px; margin: 0 auto; padding: 0 16px; box-sizing: content-box; }
 .card {
   position: relative; display: flex; flex-direction: column; padding: 8px; overflow: hidden;
@@ -269,13 +276,12 @@ button.chip { padding: 4px 6px 4px 4px; }
   .icon-btn > img:not(.menu-line) { width: 28px; height: 28px; }
   .pill-light { min-width: 0; padding: 4px 14px 5px; font-size: 12px; line-height: 22px; }
   /* Phones: centre the text block between the header and the cards that peek in below, both ways. */
-  .hero { height: 430px; padding: 89px 0 143px; }
-  .rings { padding-top: 74px; }
+  .hero { display: flex; align-items: center; justify-content: center; padding: 89px 0 100px; }
+  .hero-inner { width: 100%; padding-top: 0; text-align: center; }
   /* Wider gradient layer on phones so the hero only ever sees its soft middle, never the faded edge. */
   .aurora { left: -60%; right: -60%; }
-  .hero h1 { font-size: 30px; line-height: 34px; letter-spacing: -.75px; }
-  .hero h1 br { display: inline; }
-  .hero-sub { font-size: 14px; }
+  .hero h1 { font-size: 44px; line-height: 48px; letter-spacing: -1.1px; }
+  .hero-sub { font-size: 18px; }
   .cards { grid-template-columns: minmax(0, 1fr); max-width: 420px; }
   .card-media { height: auto; aspect-ratio: 348 / 335; }
   .f-cols { grid-template-columns: 1fr; }
@@ -289,7 +295,7 @@ button.chip { padding: 4px 6px 4px 4px; }
 
 /* ---------- version tab bar ---------- */
 .versions {
-  position: fixed; left: max(20px, env(safe-area-inset-left)); top: 98px; z-index: 50;
+  position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 50;
   display: flex; gap: 4px; padding: 5px; border-radius: 999px;
   background: rgba(20, 22, 26, .62); -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3);
   box-shadow: 0 8px 30px rgba(0, 0, 0, .28), inset 0 0 0 1px rgba(255, 255, 255, .12);
@@ -301,4 +307,4 @@ button.chip { padding: 4px 6px 4px 4px; }
 .versions button:hover { color: #fff; }
 .versions button[aria-pressed="true"] { background: #fff; color: #111; }
 .versions button:focus-visible { outline: 2px solid rgba(255, 255, 255, .9); outline-offset: 2px; }
-@media (max-width: 760px) { .versions { left: 12px; top: 93px; padding: 3px; gap: 2px; } .versions button { min-width: 34px; height: 28px; padding: 0 9px; font-size: 12px; line-height: 28px; } }
+@media (max-width: 760px) { .versions { left: 12px; bottom: max(12px, env(safe-area-inset-bottom)); } .versions button { min-width: 38px; padding: 0 10px; } }
