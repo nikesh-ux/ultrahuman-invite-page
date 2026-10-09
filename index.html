@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261009-2">
+<link rel="stylesheet" href="styles.css?v=20261009-14">
 <script>document.documentElement.classList.add("js"); try { var t = localStorage.getItem("uh-theme"); if (/^v[1-6]$/.test(t)) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
 </head>
 <body>
@@ -66,31 +66,7 @@
   <div class="scrim" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
   <div class="hero-inner">
-    <span class="hero-mark">
-      <svg class="icon-draw" viewBox="0 0 65 47" width="32.5" height="23.5" fill="none" aria-hidden="true">
-        <defs>
-          <clipPath id="shape"><path d="M46.6374 18.8622L62.7825 33.446L51.8605 45.382L33.17 28.5016L32.4997 27.8962L31.8294 28.5016L13.1395 45.382L2.21748 33.446L18.3626 18.8622L20.2912 17.1201H17.6923L8.54635 17.1202V1H56.4311V17.1202L47.3077 17.1201H44.7088L46.6374 18.8622Z"/></clipPath>
-          <!-- smooth satin silver: bright top-left easing to mid silver, with a soft reflected lift at the bottom-right -->
-          <linearGradient id="chrome" gradientUnits="userSpaceOnUse" x1="6" y1="0" x2="58" y2="47">
-            <stop offset="0" stop-color="#fdfefe"/><stop offset=".4" stop-color="#eef1f4"/><stop offset=".7" stop-color="#dde2e7"/>
-            <stop offset=".9" stop-color="#d1d8de"/><stop offset="1" stop-color="#e3e7eb"/>
-          </linearGradient>
-          <radialGradient id="lift" gradientUnits="userSpaceOnUse" cx="22" cy="9" r="34">
-            <stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="depth" gradientUnits="userSpaceOnUse" cx="52" cy="42" r="26">
-            <stop offset="0" stop-color="#7d8894" stop-opacity=".07"/><stop offset="1" stop-color="#7d8894" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <path d="M46.6374 18.8622L62.7825 33.446L51.8605 45.382L33.17 28.5016L32.4997 27.8962L31.8294 28.5016L13.1395 45.382L2.21748 33.446L18.3626 18.8622L20.2912 17.1201H17.6923L8.54635 17.1202V1H56.4311V17.1202L47.3077 17.1201H44.7088L46.6374 18.8622Z" fill="url(#chrome)"/>
-        <g clip-path="url(#shape)">
-          <rect x="0" y="0" width="65" height="47" fill="url(#lift)"/>
-          <rect x="0" y="0" width="65" height="47" fill="url(#depth)"/>
-        </g>
-        <path d="M46.6374 18.8622L62.7825 33.446L51.8605 45.382L33.17 28.5016L32.4997 27.8962L31.8294 28.5016L13.1395 45.382L2.21748 33.446L18.3626 18.8622L20.2912 17.1201H17.6923L8.54635 17.1202V1H56.4311V17.1202L47.3077 17.1201H44.7088L46.6374 18.8622Z" stroke="#fff" stroke-opacity=".55" stroke-width=".5" stroke-linejoin="round"/>
-      </svg>
-    </span>
-    <h1>You are invited by<br>Dave Dillon</h1>
+    <h1>You are invited by <br>Dave Dillon</h1>
     <p class="hero-sub">&ldquo;Get 10% off using code &ldquo;<button type="button" class="code" data-code="Chase10" title="Click to copy" aria-label="Copy promo code Chase10">Chase10</button>&rdquo; at checkout&rdquo;</p>
   </div>
 </section>
@@ -309,20 +285,10 @@
   // Version tabs: swap the gradient colour set (CSS variables only).
   (function () {
     var root = document.documentElement, tabs = document.querySelectorAll('.versions button');
-    // Replay the icon's one-time corner wipe from the start.
-    function replayIcon() {
-      var icon = document.querySelector('.icon-draw');
-      if (!icon) return;
-      icon.style.animation = 'none';
-      void icon.getBoundingClientRect();
-      icon.style.animation = '';
-    }
     function set(v, save) {
-      var changed = root.getAttribute('data-theme') !== v;
       root.setAttribute('data-theme', v);
       tabs.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-theme') === v)); });
       if (save) { try { localStorage.setItem('uh-theme', v); } catch (e) {} }
-      if (save && changed) replayIcon();
     }
     set(root.getAttribute('data-theme') || 'v1', false);
     tabs.forEach(function (b) { b.addEventListener('click', function () { set(b.getAttribute('data-theme'), true); }); });
