@@ -82,20 +82,12 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .pill-blue { width: 112px; height: 32px; padding: 0 12px; background: var(--blue); color: #fff; line-height: 16px; }
 
 /* ---------- hero ---------- */
-.hero { position: relative; height: clamp(600px, calc(100svh + 10px), 770px); background: #000; overflow: hidden; clip-path: inset(0 0 2px 0); padding-top: 92px; }
-.hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: clamp(60px, 14svh, 170px) 16px 0; text-align: center; color: #fff; }
-.icon-draw { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.hero-mark { position: relative; display: block; width: 32.5px; height: 23.5px; }
+.hero { position: relative; height: 560px; background: #000; overflow: hidden; clip-path: inset(0 0 2px 0); padding-top: 92px;
+  /* The whole banner (black base, gradient, grain) dissolves into the page grey together, so the colour fades out instead of passing through a muddy overlay. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 190px), rgba(0,0,0,0.999) calc(100% - 180.0px), rgba(0,0,0,0.990) calc(100% - 170.0px), rgba(0,0,0,0.969) calc(100% - 160.0px), rgba(0,0,0,0.934) calc(100% - 150.0px), rgba(0,0,0,0.882) calc(100% - 140.0px), rgba(0,0,0,0.815) calc(100% - 130.0px), rgba(0,0,0,0.736) calc(100% - 120.0px), rgba(0,0,0,0.646) calc(100% - 110.0px), rgba(0,0,0,0.549) calc(100% - 100.0px), rgba(0,0,0,0.451) calc(100% - 90.0px), rgba(0,0,0,0.354) calc(100% - 80.0px), rgba(0,0,0,0.264) calc(100% - 70.0px), rgba(0,0,0,0.185) calc(100% - 60.0px), rgba(0,0,0,0.118) calc(100% - 50.0px), rgba(0,0,0,0.066) calc(100% - 40.0px), rgba(0,0,0,0.031) calc(100% - 30.0px), rgba(0,0,0,0.010) calc(100% - 20.0px), rgba(0,0,0,0.001) calc(100% - 10.0px), rgba(0,0,0,0.000) calc(100% - 0.0px)); mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 190px), rgba(0,0,0,0.999) calc(100% - 180.0px), rgba(0,0,0,0.990) calc(100% - 170.0px), rgba(0,0,0,0.969) calc(100% - 160.0px), rgba(0,0,0,0.934) calc(100% - 150.0px), rgba(0,0,0,0.882) calc(100% - 140.0px), rgba(0,0,0,0.815) calc(100% - 130.0px), rgba(0,0,0,0.736) calc(100% - 120.0px), rgba(0,0,0,0.646) calc(100% - 110.0px), rgba(0,0,0,0.549) calc(100% - 100.0px), rgba(0,0,0,0.451) calc(100% - 90.0px), rgba(0,0,0,0.354) calc(100% - 80.0px), rgba(0,0,0,0.264) calc(100% - 70.0px), rgba(0,0,0,0.185) calc(100% - 60.0px), rgba(0,0,0,0.118) calc(100% - 50.0px), rgba(0,0,0,0.066) calc(100% - 40.0px), rgba(0,0,0,0.031) calc(100% - 30.0px), rgba(0,0,0,0.010) calc(100% - 20.0px), rgba(0,0,0,0.001) calc(100% - 10.0px), rgba(0,0,0,0.000) calc(100% - 0.0px)); }
+.hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 92px 16px 0; text-align: center; color: #fff; }
 /* Silver highlight clipped to the icon shape; each one rides in with the gradient pass it belongs to. */
-/* The icon plays one intro only: a soft diagonal wipe growing out of the top-left corner. After that it is completely static. */
-.icon-draw {
-  -webkit-mask-image: linear-gradient(135deg, #000 0, #000 42%, transparent 58%); mask-image: linear-gradient(135deg, #000 0, #000 42%, transparent 58%);
-  -webkit-mask-size: 320% 320%; mask-size: 320% 320%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-  -webkit-mask-position: 100% 100%; mask-position: 100% 100%;
-  animation: icon-wipe 2s cubic-bezier(.3, .45, .3, 1) .2s forwards;
-}
-@keyframes icon-wipe { to { -webkit-mask-position: 0% 0%; mask-position: 0% 0%; } }
-.hero h1 { font-size: 80px; font-weight: 500; line-height: 80px; letter-spacing: -2px; }
+.hero h1 { font-size: 72px; font-weight: 500; line-height: 72px; letter-spacing: -1.8px; }
 .hero-sub { font-size: 24px; line-height: normal; margin-top: 11px; }
 /* Sweeping gradient: slides in from the right on load, then loops out and back in.
    The layer is wider/taller than the hero and masked so every edge feathers to black. */
@@ -124,11 +116,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* Second pass is the mirror image, half a cycle later. The negative delay on the first pass means the page opens with it already sliding into place. Each pass is fully in before the other starts leaving, so something is always on screen. */
 .aurora.from-right { --lobe: radial-gradient(ellipse 34% 46% at 70% 56%, color-mix(in srgb, var(--g1) 42%, transparent) 0, color-mix(in srgb, var(--g1) 27%, transparent) 25%, color-mix(in srgb, var(--g1) 11%, transparent) 50%, color-mix(in srgb, var(--g1) 3%, transparent) 75%, transparent 100%); }
 .aurora.from-left { transform: scaleX(-1); animation: drift-y 9s ease-in-out -7s infinite alternate-reverse, drift-tilt 15s ease-in-out -12s infinite alternate-reverse, drift-size 13s ease-in-out -8s infinite alternate; }
-/* Bottom of the hero dissolves into the grey of the pricing section (smootherstep ramp, so there is no visible start or end line); the cards sit above this layer. */
-.hero::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: clamp(180px, 42%, 300px); pointer-events: none; z-index: 0;
-  background: linear-gradient(to bottom, rgba(238,238,238,0.000) 0%, rgba(238,238,238,0.001) 5%, rgba(238,238,238,0.009) 10%, rgba(238,238,238,0.027) 15%, rgba(238,238,238,0.058) 20%, rgba(238,238,238,0.104) 25%, rgba(238,238,238,0.163) 30%, rgba(238,238,238,0.235) 35%, rgba(238,238,238,0.317) 40%, rgba(238,238,238,0.407) 45%, rgba(238,238,238,0.500) 50%, rgba(238,238,238,0.593) 55%, rgba(238,238,238,0.683) 60%, rgba(238,238,238,0.765) 65%, rgba(238,238,238,0.837) 70%, rgba(238,238,238,0.896) 75%, rgba(238,238,238,0.942) 80%, rgba(238,238,238,0.973) 85%, rgba(238,238,238,0.991) 90%, rgba(238,238,238,0.999) 95%, rgba(238,238,238,1.000) 100%);
-}
 .scrim { position: absolute; inset: 0; background: linear-gradient(rgba(0, 0, 0, .35), transparent 38%); pointer-events: none; }
 .hero-inner { text-shadow: 0 1px 6px rgba(0, 20, 40, .06); }
 .hero-sub .code {
@@ -162,12 +149,15 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @keyframes drift-y { from { translate: 0 -9%; } to { translate: 0 9%; } }
 @keyframes drift-tilt { from { rotate: -9deg; } to { rotate: 9deg; } }
 @keyframes drift-size { from { scale: .96; } to { scale: 1.2; } }
-@media (prefers-reduced-motion: reduce) { .aurora, .aurora-wrap { animation: none; } .icon-draw { animation: none; -webkit-mask-position: 0 0; mask-position: 0 0; } .aurora.from-left { display: none; } }
+@media (prefers-reduced-motion: reduce) { .aurora, .aurora-wrap { animation: none; } .aurora.from-left { display: none; } }
 
 /* ---------- rings ---------- */
 /* The cards rise into the lower part of the hero so they're already in view on landing. */
 /* 128px of breathing room above and below the cards. The top 128px (plus the 90px peek) overlaps the hero's fade, so the cards still show on landing. */
-.rings { position: relative; margin-top: -218px; padding: 128px 0; background: linear-gradient(to bottom, rgba(238,238,238,0) 214px, #eee 220px); }
+.rings { position: relative; margin-top: -208px; padding: 128px 0; background: linear-gradient(to bottom, rgba(238,238,238,0) 204px, #eee 210px); }
+/* The section's top slice overlaps the banner (the cards ride up over the gradient). Let clicks pass through that empty slice to the promo code; the cards stay clickable. */
+.rings { pointer-events: none; }
+.rings .cards { pointer-events: auto; }
 .cards { display: grid; grid-template-columns: repeat(2, 364px); gap: 24px; justify-content: center; max-width: 784px; margin: 0 auto; padding: 0 16px; box-sizing: content-box; }
 .card {
   position: relative; display: flex; flex-direction: column; padding: 8px; overflow: hidden;
@@ -276,7 +266,7 @@ button.chip { padding: 4px 6px 4px 4px; }
   .icon-btn > img:not(.menu-line) { width: 28px; height: 28px; }
   .pill-light { min-width: 0; padding: 4px 14px 5px; font-size: 12px; line-height: 22px; }
   /* Phones: centre the text block between the header and the cards that peek in below, both ways. */
-  .hero { display: flex; align-items: center; justify-content: center; padding: 89px 0 100px; }
+  .hero { display: flex; align-items: center; justify-content: center; height: 540px; padding: 89px 0 80px; }
   .hero-inner { width: 100%; padding-top: 0; text-align: center; }
   /* Wider gradient layer on phones so the hero only ever sees its soft middle, never the faded edge. */
   .aurora { left: -60%; right: -60%; }
