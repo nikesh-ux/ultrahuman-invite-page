@@ -277,7 +277,7 @@
         io.unobserve(e.target);
       });
     }, { threshold: 0.15 });
-    cards.forEach(function (c, i) { c.style.setProperty('--d', (i % 2) * 140 + 'ms'); io.observe(c); });
+    cards.forEach(function (c, i) { c.style.setProperty('--d', (350 + (i % 2) * 140) + 'ms'); io.observe(c); });
   })();
 
   // Each sweep picks a new vertical offset when it starts, so some passes run flat and some run diagonal.
