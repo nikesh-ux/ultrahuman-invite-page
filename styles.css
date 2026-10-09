@@ -88,7 +88,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .hero-mark { position: relative; display: block; width: 65px; height: 47px; }
 /* Silver highlight clipped to the icon shape; each one rides in with the gradient pass it belongs to. */
 .shines { position: absolute; inset: 0; pointer-events: none; opacity: 0; animation: icon-reveal .7s ease-out 2.2s forwards; }
-/* Stroke draws itself on load; the shimmer and sparkle fade in once the outline is complete. */
+/* Stroke draws itself on load; the shimmer fades in once the outline is complete. */
 .draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: icon-draw 1.9s cubic-bezier(.65, 0, .25, 1) .25s forwards; }
 .draw.d-ridge { animation-delay: .4s; }
 @keyframes icon-draw { to { stroke-dashoffset: 0; } }
@@ -99,24 +99,12 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   background-size: 300% 100%; background-repeat: no-repeat;
   animation-duration: 10s; animation-timing-function: cubic-bezier(.45, 0, .2, 1); animation-iteration-count: infinite; animation-fill-mode: both;
 }
-.spark { position: absolute; width: 16px; height: 16px; opacity: 0; pointer-events: none; animation-duration: 10s; animation-timing-function: cubic-bezier(.45, 0, .2, 1); animation-iteration-count: infinite; animation-fill-mode: both;
-  background:
-    radial-gradient(circle, #fff 0, rgba(255,255,255,.85) 10%, rgba(255,255,255,0) 42%),
-    linear-gradient(to right, transparent 0, #fff 50%, transparent 100%) center / 100% 1px no-repeat,
-    linear-gradient(to bottom, transparent 0, #fff 50%, transparent 100%) center / 1px 100% no-repeat; }
-.spark-right { left: 49px; top: -7px; animation-name: spark; animation-delay: -1.5s; }
-.spark-left { left: 0.5px; top: -7px; animation-name: spark; animation-delay: 3.5s; }
-@keyframes spark {
-  0%, 6% { opacity: 0; transform: scale(.2) rotate(0deg); }
-  10% { opacity: 1; transform: scale(1) rotate(45deg); }
-  18%, 100% { opacity: 0; transform: scale(.4) rotate(90deg); }
-}
 .shine-right {
-  background-image: linear-gradient(105deg, transparent 30%, #bcc3cb 37%, #e9edf1 43%, #fff 48%, #d3d8de 52%, #f7f9fa 57%, #c0c7ce 62%, transparent 69%);
+  background-image: linear-gradient(105deg, transparent 30%, rgba(190, 198, 206, .22) 36%, #cfd6dd 41%, #f4f7f9 45%, #fff 48%, #f0f3f6 51%, #cfd6dd 56%, rgba(190, 198, 206, .22) 61%, transparent 68%);
   animation-name: shine-right; animation-delay: -1.5s;
 }
 .shine-left {
-  background-image: linear-gradient(75deg, transparent 30%, #bcc3cb 37%, #e9edf1 43%, #fff 48%, #d3d8de 52%, #f7f9fa 57%, #c0c7ce 62%, transparent 69%);
+  background-image: linear-gradient(75deg, transparent 30%, rgba(190, 198, 206, .22) 36%, #cfd6dd 41%, #f4f7f9 45%, #fff 48%, #f0f3f6 51%, #cfd6dd 56%, rgba(190, 198, 206, .22) 61%, transparent 68%);
   animation-name: shine-left; animation-delay: 3.5s;
 }
 .hero h1 { font-size: 80px; font-weight: 500; line-height: 80px; letter-spacing: -2px; }
@@ -175,17 +163,20 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 
 @keyframes aurora-intro { from { transform: translateX(70%); opacity: 0; } to { transform: none; opacity: 1; } }
+/* One smooth, one-directional glide in; slow hold; one smooth glide out. Opacity peaks mid-way in so the highlight blooms rather than switches on. */
 @keyframes shine-right {
-  0%   { background-position: -10% 0; opacity: 0; }
-  14%  { background-position: 48% 0; opacity: 1; }
-  30%, 62% { background-position: 30% 0; opacity: .6; }
-  90%, 100% { background-position: -10% 0; opacity: 0; }
+  0%   { background-position: -14% 0; opacity: 0; animation-timing-function: cubic-bezier(.3, .0, .2, 1); }
+  14%  { opacity: 1; }
+  32%  { background-position: 34% 0; opacity: .6; animation-timing-function: linear; }
+  60%  { background-position: 31% 0; opacity: .6; animation-timing-function: cubic-bezier(.5, 0, .7, 1); }
+  92%, 100% { background-position: -14% 0; opacity: 0; }
 }
 @keyframes shine-left {
-  0%   { background-position: 110% 0; opacity: 0; }
-  14%  { background-position: 48% 0; opacity: 1; }
-  30%, 62% { background-position: 66% 0; opacity: .6; }
-  90%, 100% { background-position: 110% 0; opacity: 0; }
+  0%   { background-position: 114% 0; opacity: 0; animation-timing-function: cubic-bezier(.3, .0, .2, 1); }
+  14%  { opacity: 1; }
+  32%  { background-position: 66% 0; opacity: .6; animation-timing-function: linear; }
+  60%  { background-position: 69% 0; opacity: .6; animation-timing-function: cubic-bezier(.5, 0, .7, 1); }
+  92%, 100% { background-position: 114% 0; opacity: 0; }
 }
 @keyframes aurora-pass {
   /* --dy is re-rolled each pass (see script), so the sweep arrives and leaves on a varying diagonal */
@@ -194,7 +185,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   62%  { translate: calc(var(--dir) * -9%) calc(var(--dy) * -.12); animation-timing-function: cubic-bezier(.55, .1, .75, .45); }
   90%, 100% { translate: calc(var(--dir) * 100%) calc(var(--dy) * -1); }
 }
-@media (prefers-reduced-motion: reduce) { .aurora, .aurora-intro, .shine, .spark { animation: none; } .draw { animation: none; stroke-dashoffset: 0; } .shines { animation: none; opacity: 1; } .aurora.from-left { display: none; } }
+@media (prefers-reduced-motion: reduce) { .aurora, .aurora-intro, .shine { animation: none; } .draw { animation: none; stroke-dashoffset: 0; } .shines { animation: none; opacity: 1; } .aurora.from-left { display: none; } }
 
 /* ---------- rings ---------- */
 /* The cards rise into the lower part of the hero so they're already in view on landing. */
