@@ -9,9 +9,27 @@
   --font: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
+/* ---------- gradient colour themes (switched by the tab bar at the bottom) ----------
+   Only these colours change between versions; layout, animation and timing are identical.
+   Registered as <color> so switching versions cross-fades instead of snapping. */
+@property --g1 { syntax: "<color>"; inherits: true; initial-value: #00304f; }
+@property --g2 { syntax: "<color>"; inherits: true; initial-value: #2f6f9c; }
+@property --g3 { syntax: "<color>"; inherits: true; initial-value: #8fd0e0; }
+@property --g4 { syntax: "<color>"; inherits: true; initial-value: #cdf0ef; }
+@property --g5 { syntax: "<color>"; inherits: true; initial-value: #e9f9f5; }
+@property --glow { syntax: "<color>"; inherits: true; initial-value: #e8fbf7; }
+@property --warm { syntax: "<color>"; inherits: true; initial-value: #f0cdc3; }
+:root, :root[data-theme="v1"] { --g1: #00304f; --g2: #2f6f9c; --g3: #8fd0e0; --g4: #cdf0ef; --g5: #e9f9f5; --glow: #e8fbf7; --warm: #f0cdc3; }
+/* PLACEHOLDERS for v2-v6 until the real colours are supplied: replace the seven values in each block. */
+:root[data-theme="v2"] { --g1: #2a0f4a; --g2: #7a3fb0; --g3: #c79bf0; --g4: #f0d6f5; --g5: #fbeefa; --glow: #fbeefa; --warm: #f7c6b5; }
+:root[data-theme="v3"] { --g1: #05382f; --g2: #1f8a6e; --g3: #7fd6b8; --g4: #d3f3e4; --g5: #effaf3; --glow: #eefaf1; --warm: #f2dfb0; }
+:root[data-theme="v4"] { --g1: #4a1d08; --g2: #c4561d; --g3: #f3a566; --g4: #fbd9b3; --g5: #fff1e0; --glow: #fff0dd; --warm: #f6b9a6; }
+:root[data-theme="v5"] { --g1: #4a0a22; --g2: #c2235a; --g3: #f27aa0; --g4: #fcc9d8; --g5: #fff0f4; --glow: #fff0f3; --warm: #ffd2a8; }
+:root[data-theme="v6"] { --g1: #0f1115; --g2: #4a515c; --g3: #99a1ac; --g4: #dde1e6; --g5: #f6f7f9; --glow: #f4f6f8; --warm: #e6dccf; }
+
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; overflow-x: clip; background: #fff; font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; }
+body { margin: 0; overflow-x: clip; background: #eee; font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; margin: 0; padding: 0; }
 h1, h2, h3, p { margin: 0; }
@@ -64,23 +82,34 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .pill-blue { width: 112px; height: 32px; padding: 0 12px; background: var(--blue); color: #fff; line-height: 16px; }
 
 /* ---------- hero ---------- */
-.hero { position: relative; height: clamp(600px, calc(100svh + 10px), 770px); background: #000; overflow: hidden; padding-top: 92px; }
+.hero { position: relative; height: clamp(600px, calc(100svh + 10px), 770px); background: #000; overflow: hidden; clip-path: inset(0 0 2px 0); padding-top: 92px; }
 .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: clamp(60px, 14svh, 170px) 16px 0; text-align: center; color: #fff; }
-.hero-icon { width: 65px; height: 47px; }
+.icon-draw { position: absolute; inset: 0; width: 65px; height: 47px; overflow: visible; }
 .hero-mark { position: relative; display: block; width: 65px; height: 47px; }
-/* Raises the floor of the outline: the SVG stroke fades to transparent toward the bottom right, which vanished against the bright gradient. */
-.hero-mark::before {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, .8) 55%, rgba(255, 255, 255, .6) 100%);
-  -webkit-mask: url("assets/hero-icon-mask.svg") center / 100% 100% no-repeat; mask: url("assets/hero-icon-mask.svg") center / 100% 100% no-repeat;
-}
 /* Silver highlight clipped to the icon shape; each one rides in with the gradient pass it belongs to. */
-.shines { position: absolute; inset: 0; pointer-events: none; }
+.shines { position: absolute; inset: 0; pointer-events: none; opacity: 0; animation: icon-reveal .7s ease-out 2.2s forwards; }
+/* Stroke draws itself on load; the shimmer and sparkle fade in once the outline is complete. */
+.draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: icon-draw 1.9s cubic-bezier(.65, 0, .25, 1) .25s forwards; }
+.draw.d-ridge { animation-delay: .4s; }
+@keyframes icon-draw { to { stroke-dashoffset: 0; } }
+@keyframes icon-reveal { to { opacity: 1; } }
 .shine {
   position: absolute; inset: 0; opacity: 0; pointer-events: none;
   -webkit-mask: url("assets/hero-icon-mask.svg") center / 100% 100% no-repeat; mask: url("assets/hero-icon-mask.svg") center / 100% 100% no-repeat;
   background-size: 300% 100%; background-repeat: no-repeat;
   animation-duration: 10s; animation-timing-function: cubic-bezier(.45, 0, .2, 1); animation-iteration-count: infinite; animation-fill-mode: both;
+}
+.spark { position: absolute; width: 16px; height: 16px; opacity: 0; pointer-events: none; animation-duration: 10s; animation-timing-function: cubic-bezier(.45, 0, .2, 1); animation-iteration-count: infinite; animation-fill-mode: both;
+  background:
+    radial-gradient(circle, #fff 0, rgba(255,255,255,.85) 10%, rgba(255,255,255,0) 42%),
+    linear-gradient(to right, transparent 0, #fff 50%, transparent 100%) center / 100% 1px no-repeat,
+    linear-gradient(to bottom, transparent 0, #fff 50%, transparent 100%) center / 1px 100% no-repeat; }
+.spark-right { left: 49px; top: -7px; animation-name: spark; animation-delay: -1.5s; }
+.spark-left { left: 0.5px; top: -7px; animation-name: spark; animation-delay: 3.5s; }
+@keyframes spark {
+  0%, 6% { opacity: 0; transform: scale(.2) rotate(0deg); }
+  10% { opacity: 1; transform: scale(1) rotate(45deg); }
+  18%, 100% { opacity: 0; transform: scale(.4) rotate(90deg); }
 }
 .shine-right {
   background-image: linear-gradient(105deg, transparent 30%, #bcc3cb 37%, #e9edf1 43%, #fff 48%, #d3d8de 52%, #f7f9fa 57%, #c0c7ce 62%, transparent 69%);
@@ -100,14 +129,15 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   /* One continuous field: an oklab colour ramp plus two very wide, eased glows, blurred heavily.
      The fade-out is a single eased radial mask, so there are no straight edges anywhere. */
   background:
-    radial-gradient(ellipse 60% 80% at 92% 105%, rgba(240, 205, 195, .75) 0, rgba(240, 205, 195, .5) 20%, rgba(240, 205, 195, .22) 45%, rgba(240, 205, 195, .06) 70%, transparent 100%),
-    radial-gradient(ellipse 70% 90% at 88% 20%, rgba(232, 251, 247, .8) 0, rgba(232, 251, 247, .5) 25%, rgba(232, 251, 247, .2) 50%, rgba(232, 251, 247, .05) 75%, transparent 100%),
-    linear-gradient(in oklab to right, rgba(0, 24, 48, 0) 4%, #00304f 28%, #2f6f9c 44%, #8fd0e0 60%, #cdf0ef 76%, #e9f9f5 92%);
+    radial-gradient(ellipse 60% 80% at 92% 105%, color-mix(in srgb, var(--warm) 75%, transparent) 0, color-mix(in srgb, var(--warm) 50%, transparent) 20%, color-mix(in srgb, var(--warm) 22%, transparent) 45%, color-mix(in srgb, var(--warm) 6%, transparent) 70%, transparent 100%),
+    radial-gradient(ellipse 70% 90% at 88% 20%, color-mix(in srgb, var(--glow) 80%, transparent) 0, color-mix(in srgb, var(--glow) 50%, transparent) 25%, color-mix(in srgb, var(--glow) 20%, transparent) 50%, color-mix(in srgb, var(--glow) 5%, transparent) 75%, transparent 100%),
+    linear-gradient(in oklab to right, color-mix(in srgb, var(--g1) 0%, transparent) 4%, var(--g1) 28%, var(--g2) 44%, var(--g3) 60%, var(--g4) 76%, var(--g5) 92%);
   filter: blur(56px);
   -webkit-mask-image: radial-gradient(ellipse 62% 70% at 50% 50%, #000 0, #000 42%, rgba(0,0,0,.97) 47%, rgba(0,0,0,.9) 52%, rgba(0,0,0,.8) 57%, rgba(0,0,0,.68) 62%, rgba(0,0,0,.55) 67%, rgba(0,0,0,.42) 72%, rgba(0,0,0,.3) 77%, rgba(0,0,0,.19) 82%, rgba(0,0,0,.1) 87%, rgba(0,0,0,.04) 93%, transparent 100%);
   mask-image: radial-gradient(ellipse 62% 70% at 50% 50%, #000 0, #000 42%, rgba(0,0,0,.97) 47%, rgba(0,0,0,.9) 52%, rgba(0,0,0,.8) 57%, rgba(0,0,0,.68) 62%, rgba(0,0,0,.55) 67%, rgba(0,0,0,.42) 72%, rgba(0,0,0,.3) 77%, rgba(0,0,0,.19) 82%, rgba(0,0,0,.1) 87%, rgba(0,0,0,.04) 93%, transparent 100%);
   --dir: 1; --dy: 0%;
   animation: aurora-pass 10s linear -1.5s infinite both;
+  transition: --g1 .8s ease, --g2 .8s ease, --g3 .8s ease, --g4 .8s ease, --g5 .8s ease, --glow .8s ease, --warm .8s ease;
 }
 /* Second pass is the mirror image, half a cycle later. The negative delay on the first pass means the page opens with it already sliding into place. Each pass is fully in before the other starts leaving, so something is always on screen. */
 .aurora.from-left { --dir: -1; transform: scaleX(-1); animation-delay: 3.5s; }
@@ -117,7 +147,20 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   background: linear-gradient(to bottom, rgba(238,238,238,0.000) 0%, rgba(238,238,238,0.001) 5%, rgba(238,238,238,0.009) 10%, rgba(238,238,238,0.027) 15%, rgba(238,238,238,0.058) 20%, rgba(238,238,238,0.104) 25%, rgba(238,238,238,0.163) 30%, rgba(238,238,238,0.235) 35%, rgba(238,238,238,0.317) 40%, rgba(238,238,238,0.407) 45%, rgba(238,238,238,0.500) 50%, rgba(238,238,238,0.593) 55%, rgba(238,238,238,0.683) 60%, rgba(238,238,238,0.765) 65%, rgba(238,238,238,0.837) 70%, rgba(238,238,238,0.896) 75%, rgba(238,238,238,0.942) 80%, rgba(238,238,238,0.973) 85%, rgba(238,238,238,0.991) 90%, rgba(238,238,238,0.999) 95%, rgba(238,238,238,1.000) 100%);
 }
 .scrim { position: absolute; inset: 0; background: linear-gradient(rgba(0, 0, 0, .35), transparent 38%); pointer-events: none; }
-.hero-inner { text-shadow: 0 2px 24px rgba(0, 20, 40, .35); }
+.hero-inner { text-shadow: 0 1px 12px rgba(0, 20, 40, .16); }
+.hero-sub .code {
+  position: relative; display: inline; padding: 0; margin: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; color: inherit; letter-spacing: inherit; -webkit-tap-highlight-color: transparent;
+  text-decoration: underline; text-decoration-skip-ink: none; text-decoration-thickness: .035em; text-underline-offset: .21em;
+}
+.hero-sub .code:focus-visible { outline: 2px solid rgba(255, 255, 255, .8); outline-offset: 4px; border-radius: 2px; }
+/* "Copied" confirmation bubble */
+.hero-sub .code::after {
+  content: "Copied"; position: absolute; left: 50%; top: calc(100% + 10px); transform: translate(-50%, -4px);
+  padding: 5px 11px; border-radius: 999px; background: #fff; color: #111; font-size: 12px; line-height: 16px; letter-spacing: -.1px; white-space: nowrap;
+  opacity: 0; pointer-events: none; transition: opacity .18s ease, transform .18s ease; text-decoration: none; display: inline-block; text-shadow: none;
+}
+.hero-sub .code[data-copied]::after { opacity: 1; transform: translate(-50%, 0); }
 
 /* Film grain: one overlay-blended noise layer for the gradient, one faint speckle layer for the dark areas. */
 .grain, .grain::after { position: absolute; inset: 0; pointer-events: none; background-size: 220px 220px; }
@@ -151,12 +194,12 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   62%  { translate: calc(var(--dir) * -9%) calc(var(--dy) * -.12); animation-timing-function: cubic-bezier(.55, .1, .75, .45); }
   90%, 100% { translate: calc(var(--dir) * 100%) calc(var(--dy) * -1); }
 }
-@media (prefers-reduced-motion: reduce) { .aurora, .aurora-intro, .shine { animation: none; } .aurora.from-left { display: none; } }
+@media (prefers-reduced-motion: reduce) { .aurora, .aurora-intro, .shine, .spark { animation: none; } .draw { animation: none; stroke-dashoffset: 0; } .shines { animation: none; opacity: 1; } .aurora.from-left { display: none; } }
 
 /* ---------- rings ---------- */
 /* The cards rise into the lower part of the hero so they're already in view on landing. */
 /* 128px of breathing room above and below the cards. The top 128px (plus the 90px peek) overlaps the hero's fade, so the cards still show on landing. */
-.rings { position: relative; margin-top: -218px; padding: 128px 0; background: linear-gradient(to bottom, transparent 218px, #eee 218px); }
+.rings { position: relative; margin-top: -218px; padding: 128px 0; background: linear-gradient(to bottom, rgba(238,238,238,0) 214px, #eee 220px); }
 .cards { display: grid; grid-template-columns: repeat(2, 364px); gap: 24px; justify-content: center; max-width: 784px; margin: 0 auto; padding: 0 16px; box-sizing: content-box; }
 .card {
   position: relative; display: flex; flex-direction: column; padding: 8px; overflow: hidden;
@@ -164,17 +207,18 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .card-media { position: relative; display: block; height: 335px; border-radius: 12px; overflow: hidden; }
 .card-media img { position: absolute; left: calc(50% + 3px); top: calc(50% + var(--dy, 0px)); width: 102%; height: 131.55%; max-width: none; transform: translate(-50%, -50%); object-fit: cover; }
-.card-body { display: flex; flex: 1; flex-direction: column; justify-content: space-between; gap: 16px; padding: 16px 8px 10px; }
+.card-body { display: flex; flex: 1; flex-direction: column; justify-content: space-between; gap: 12px; padding: 16px 8px 5px; }
 .card h2 { font-size: 16px; font-weight: 500; line-height: 17.6px; letter-spacing: -.48px; }
 .card-text p { padding: 4px 0 16px; min-height: 48px; font-size: 12px; line-height: 15.6px; letter-spacing: -.42px; color: var(--ink-70); }
-.card-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; }
-.price { display: flex; align-items: baseline; gap: 8px; letter-spacing: -.42px; white-space: nowrap; }
+.card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.price { display: flex; flex-direction: column; justify-content: center; height: 41px; letter-spacing: -.42px; white-space: nowrap; }
+.price-row { display: flex; align-items: center; gap: 6px; margin-bottom: -5px; }
 .price s { font-size: 14px; line-height: 24px; color: var(--ink-50); }
 .price strong { font-size: 16px; font-weight: 500; line-height: 16px; }
 .price span { font-size: 14px; line-height: 24px; color: rgba(0, 0, 0, .55); }
 .badge {
   position: absolute; top: 16px; right: 16px; display: flex; align-items: center; height: 28px; padding: 0 16px;
-  background: rgba(245, 245, 245, .8); border: 1px solid rgba(17, 43, 175, .2); border-radius: 48px;
+  background: rgba(245, 245, 245, .8); border-radius: 48px;
   font-size: 12px; font-weight: 500; line-height: 12px; letter-spacing: -.24px; color: var(--blue);
 }
 
@@ -280,3 +324,19 @@ button.chip { padding: 4px 6px 4px 4px; }
   .f-cell, .f-cell:first-child { padding-left: 0; border-right: 0; border-bottom: 1px solid var(--line-soft); }
   .footer { padding: 0 20px; }
 }
+
+/* ---------- version tab bar ---------- */
+.versions {
+  position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 50;
+  display: flex; gap: 4px; padding: 5px; border-radius: 999px;
+  background: rgba(20, 22, 26, .62); -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .28), inset 0 0 0 1px rgba(255, 255, 255, .12);
+}
+.versions button {
+  min-width: 52px; height: 34px; padding: 0 16px; border-radius: 999px; font-size: 13px; font-weight: 500; letter-spacing: -.1px; line-height: 34px;
+  color: rgba(255, 255, 255, .72); transition: background .25s ease, color .25s ease;
+}
+.versions button:hover { color: #fff; }
+.versions button[aria-pressed="true"] { background: #fff; color: #111; }
+.versions button:focus-visible { outline: 2px solid rgba(255, 255, 255, .9); outline-offset: 2px; }
+@media (max-width: 760px) { .versions { left: 12px; bottom: max(12px, env(safe-area-inset-bottom)); } .versions button { min-width: 38px; padding: 0 10px; } }
