@@ -23,7 +23,7 @@
 /* PLACEHOLDERS for v2-v6 until the real colours are supplied: replace the seven values in each block. */
 :root[data-theme="v2"] { --g1: #2a0f4a; --g2: #7a3fb0; --g3: #c79bf0; --g4: #f0d6f5; --g5: #fbeefa; --glow: #fbeefa; --warm: #f7c6b5; }
 :root[data-theme="v3"] { --g1: #05382f; --g2: #1f8a6e; --g3: #7fd6b8; --g4: #d3f3e4; --g5: #effaf3; --glow: #eefaf1; --warm: #f2dfb0; }
-:root[data-theme="v4"] { --g1: #4a1d08; --g2: #c4561d; --g3: #f3a566; --g4: #fbd9b3; --g5: #fff1e0; --glow: #fff0dd; --warm: #f6b9a6; }
+:root[data-theme="v4"] { --g1: #3d2a0b; --g2: #a9791f; --g3: #d4a84a; --g4: #ecd29a; --g5: #faf0d8; --glow: #fbf1d8; --warm: #e2c080; }
 :root[data-theme="v5"] { --g1: #4a0a22; --g2: #c2235a; --g3: #f27aa0; --g4: #fcc9d8; --g5: #fff0f4; --glow: #fff0f3; --warm: #ffd2a8; }
 :root[data-theme="v6"] { --g1: #0f1115; --g2: #4a515c; --g3: #99a1ac; --g4: #dde1e6; --g5: #f6f7f9; --glow: #f4f6f8; --warm: #e6dccf; }
 
@@ -82,20 +82,20 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .pill-blue { width: 112px; height: 32px; padding: 0 12px; background: var(--blue); color: #fff; line-height: 16px; }
 
 /* ---------- hero ---------- */
-.hero { position: relative; height: 560px; background: #000; overflow: hidden; clip-path: inset(0 0 2px 0); padding-top: 92px;
+.hero { position: relative; height: 700px; background: #000; overflow: hidden; clip-path: inset(0 0 2px 0); padding-top: 92px;
   /* The whole banner (black base, gradient, grain) dissolves into the page grey together, so the colour fades out instead of passing through a muddy overlay. */
-  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 190px), rgba(0,0,0,0.999) calc(100% - 180.0px), rgba(0,0,0,0.990) calc(100% - 170.0px), rgba(0,0,0,0.969) calc(100% - 160.0px), rgba(0,0,0,0.934) calc(100% - 150.0px), rgba(0,0,0,0.882) calc(100% - 140.0px), rgba(0,0,0,0.815) calc(100% - 130.0px), rgba(0,0,0,0.736) calc(100% - 120.0px), rgba(0,0,0,0.646) calc(100% - 110.0px), rgba(0,0,0,0.549) calc(100% - 100.0px), rgba(0,0,0,0.451) calc(100% - 90.0px), rgba(0,0,0,0.354) calc(100% - 80.0px), rgba(0,0,0,0.264) calc(100% - 70.0px), rgba(0,0,0,0.185) calc(100% - 60.0px), rgba(0,0,0,0.118) calc(100% - 50.0px), rgba(0,0,0,0.066) calc(100% - 40.0px), rgba(0,0,0,0.031) calc(100% - 30.0px), rgba(0,0,0,0.010) calc(100% - 20.0px), rgba(0,0,0,0.001) calc(100% - 10.0px), rgba(0,0,0,0.000) calc(100% - 0.0px)); mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 190px), rgba(0,0,0,0.999) calc(100% - 180.0px), rgba(0,0,0,0.990) calc(100% - 170.0px), rgba(0,0,0,0.969) calc(100% - 160.0px), rgba(0,0,0,0.934) calc(100% - 150.0px), rgba(0,0,0,0.882) calc(100% - 140.0px), rgba(0,0,0,0.815) calc(100% - 130.0px), rgba(0,0,0,0.736) calc(100% - 120.0px), rgba(0,0,0,0.646) calc(100% - 110.0px), rgba(0,0,0,0.549) calc(100% - 100.0px), rgba(0,0,0,0.451) calc(100% - 90.0px), rgba(0,0,0,0.354) calc(100% - 80.0px), rgba(0,0,0,0.264) calc(100% - 70.0px), rgba(0,0,0,0.185) calc(100% - 60.0px), rgba(0,0,0,0.118) calc(100% - 50.0px), rgba(0,0,0,0.066) calc(100% - 40.0px), rgba(0,0,0,0.031) calc(100% - 30.0px), rgba(0,0,0,0.010) calc(100% - 20.0px), rgba(0,0,0,0.001) calc(100% - 10.0px), rgba(0,0,0,0.000) calc(100% - 0.0px)); }
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 320px), rgba(0,0,0,0.999) calc(100% - 306.7px), rgba(0,0,0,0.995) calc(100% - 293.3px), rgba(0,0,0,0.984) calc(100% - 280.0px), rgba(0,0,0,0.965) calc(100% - 266.7px), rgba(0,0,0,0.935) calc(100% - 253.3px), rgba(0,0,0,0.896) calc(100% - 240.0px), rgba(0,0,0,0.848) calc(100% - 226.7px), rgba(0,0,0,0.790) calc(100% - 213.3px), rgba(0,0,0,0.725) calc(100% - 200.0px), rgba(0,0,0,0.653) calc(100% - 186.7px), rgba(0,0,0,0.578) calc(100% - 173.3px), rgba(0,0,0,0.500) calc(100% - 160.0px), rgba(0,0,0,0.422) calc(100% - 146.7px), rgba(0,0,0,0.347) calc(100% - 133.3px), rgba(0,0,0,0.275) calc(100% - 120.0px), rgba(0,0,0,0.210) calc(100% - 106.7px), rgba(0,0,0,0.152) calc(100% - 93.3px), rgba(0,0,0,0.104) calc(100% - 80.0px), rgba(0,0,0,0.065) calc(100% - 66.7px), rgba(0,0,0,0.035) calc(100% - 53.3px), rgba(0,0,0,0.016) calc(100% - 40.0px), rgba(0,0,0,0.005) calc(100% - 26.7px), rgba(0,0,0,0.001) calc(100% - 13.3px), rgba(0,0,0,0.000) calc(100% - 0.0px)); mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 320px), rgba(0,0,0,0.999) calc(100% - 306.7px), rgba(0,0,0,0.995) calc(100% - 293.3px), rgba(0,0,0,0.984) calc(100% - 280.0px), rgba(0,0,0,0.965) calc(100% - 266.7px), rgba(0,0,0,0.935) calc(100% - 253.3px), rgba(0,0,0,0.896) calc(100% - 240.0px), rgba(0,0,0,0.848) calc(100% - 226.7px), rgba(0,0,0,0.790) calc(100% - 213.3px), rgba(0,0,0,0.725) calc(100% - 200.0px), rgba(0,0,0,0.653) calc(100% - 186.7px), rgba(0,0,0,0.578) calc(100% - 173.3px), rgba(0,0,0,0.500) calc(100% - 160.0px), rgba(0,0,0,0.422) calc(100% - 146.7px), rgba(0,0,0,0.347) calc(100% - 133.3px), rgba(0,0,0,0.275) calc(100% - 120.0px), rgba(0,0,0,0.210) calc(100% - 106.7px), rgba(0,0,0,0.152) calc(100% - 93.3px), rgba(0,0,0,0.104) calc(100% - 80.0px), rgba(0,0,0,0.065) calc(100% - 66.7px), rgba(0,0,0,0.035) calc(100% - 53.3px), rgba(0,0,0,0.016) calc(100% - 40.0px), rgba(0,0,0,0.005) calc(100% - 26.7px), rgba(0,0,0,0.001) calc(100% - 13.3px), rgba(0,0,0,0.000) calc(100% - 0.0px)); }
 .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 92px 16px 0; text-align: center; color: #fff; }
 /* Silver highlight clipped to the icon shape; each one rides in with the gradient pass it belongs to. */
-.hero h1 { font-size: 72px; font-weight: 500; line-height: 72px; letter-spacing: -1.8px; }
+.hero h1 { font-size: 80px; font-weight: 500; line-height: 82px; letter-spacing: -3px; }
 .hero-sub { font-size: 24px; line-height: normal; margin-top: 11px; }
 /* Sweeping gradient: slides in from the right on load, then loops out and back in.
    The layer is wider/taller than the hero and masked so every edge feathers to black. */
 /* Organic motion: both colour masses stay in place and slowly wander. Position, tilt and size each run on their own
    long, eased cycle (different lengths per layer), so the combined movement never visibly repeats and never travels edge to edge. */
-.aurora-wrap { position: absolute; inset: 0; }
-.wrap-a { animation: aurora-bloom 1.8s cubic-bezier(.22, 1, .36, 1) both, drift-x 10s ease-in-out -4s infinite alternate; }
-.wrap-b { animation: aurora-bloom 1.8s cubic-bezier(.22, 1, .36, 1) both, drift-x 12s ease-in-out -9s infinite alternate-reverse; }
+.aurora-wrap { position: absolute; inset: 0; transform-origin: 50% 0; }
+.wrap-a { animation: drift-x 10s ease-in-out -4s infinite alternate; }
+.wrap-b { animation: drift-x 12s ease-in-out -9s infinite alternate-reverse; }
 .aurora {
   position: absolute; top: -10%; bottom: -10%; left: -20%; right: -20%; will-change: transform;
   /* One continuous field: an oklab colour ramp plus two very wide, eased glows, blurred heavily.
@@ -144,17 +144,26 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.6 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-@keyframes aurora-bloom { from { opacity: 0; scale: .93; } to { opacity: 1; scale: 1; } }
+@property --r { syntax: '<length>'; inherits: false; initial-value: 0px; }
+.hero::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; --r: 300px; background: #eee;
+  -webkit-mask-image: radial-gradient(circle at 50% -40px, rgba(0,0,0,0.000) calc(var(--r) * 0.150), rgba(0,0,0,0.009) calc(var(--r) * 0.235), rgba(0,0,0,0.058) calc(var(--r) * 0.320), rgba(0,0,0,0.163) calc(var(--r) * 0.405), rgba(0,0,0,0.317) calc(var(--r) * 0.490), rgba(0,0,0,0.500) calc(var(--r) * 0.575), rgba(0,0,0,0.683) calc(var(--r) * 0.660), rgba(0,0,0,0.837) calc(var(--r) * 0.745), rgba(0,0,0,0.942) calc(var(--r) * 0.830), rgba(0,0,0,0.991) calc(var(--r) * 0.915), rgba(0,0,0,1.000) calc(var(--r) * 1.000));
+          mask-image: radial-gradient(circle at 50% -40px, rgba(0,0,0,0.000) calc(var(--r) * 0.150), rgba(0,0,0,0.009) calc(var(--r) * 0.235), rgba(0,0,0,0.058) calc(var(--r) * 0.320), rgba(0,0,0,0.163) calc(var(--r) * 0.405), rgba(0,0,0,0.317) calc(var(--r) * 0.490), rgba(0,0,0,0.500) calc(var(--r) * 0.575), rgba(0,0,0,0.683) calc(var(--r) * 0.660), rgba(0,0,0,0.837) calc(var(--r) * 0.745), rgba(0,0,0,0.942) calc(var(--r) * 0.830), rgba(0,0,0,0.991) calc(var(--r) * 0.915), rgba(0,0,0,1.000) calc(var(--r) * 1.000));
+  animation: orb-open 3s cubic-bezier(.3, .1, .15, 1) forwards, orb-gone .5s ease-out 2.5s forwards; }
+@keyframes orb-gone { to { opacity: 0; visibility: hidden; } }
+.hero-inner { z-index: 2; }
+.hero-inner > * { animation: text-in 1.5s cubic-bezier(.25, .1, .25, 1) .45s both; }
+@keyframes orb-open { from { --r: 300px; } to { --r: 4200px; } }
+@keyframes text-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 @keyframes drift-x { from { translate: -13% 0; } to { translate: 13% 0; } }
 @keyframes drift-y { from { translate: 0 -9%; } to { translate: 0 9%; } }
 @keyframes drift-tilt { from { rotate: -9deg; } to { rotate: 9deg; } }
 @keyframes drift-size { from { scale: .96; } to { scale: 1.2; } }
-@media (prefers-reduced-motion: reduce) { .aurora, .aurora-wrap { animation: none; } .aurora.from-left { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hero::before { display: none; } .hero-inner > * { animation: none; } .aurora, .aurora-wrap { animation: none; } .aurora.from-left { display: none; } }
 
 /* ---------- rings ---------- */
 /* The cards rise into the lower part of the hero so they're already in view on landing. */
 /* 128px of breathing room above and below the cards. The top 128px (plus the 90px peek) overlaps the hero's fade, so the cards still show on landing. */
-.rings { position: relative; margin-top: -208px; padding: 128px 0; background: linear-gradient(to bottom, rgba(238,238,238,0) 204px, #eee 210px); }
+.rings { position: relative; margin-top: -348px; padding: 128px 0; background: linear-gradient(to bottom, rgba(238,238,238,0) 344px, #eee 350px); }
 /* The section's top slice overlaps the banner (the cards ride up over the gradient). Let clicks pass through that empty slice to the promo code; the cards stay clickable. */
 .rings { pointer-events: none; }
 .rings .cards { pointer-events: auto; }
@@ -266,7 +275,7 @@ button.chip { padding: 4px 6px 4px 4px; }
   .icon-btn > img:not(.menu-line) { width: 28px; height: 28px; }
   .pill-light { min-width: 0; padding: 4px 14px 5px; font-size: 12px; line-height: 22px; }
   /* Phones: centre the text block between the header and the cards that peek in below, both ways. */
-  .hero { display: flex; align-items: center; justify-content: center; height: 540px; padding: 89px 0 80px; }
+  .hero { display: flex; align-items: center; justify-content: center; height: 680px; padding: 89px 0 220px; }
   .hero-inner { width: 100%; padding-top: 0; text-align: center; }
   /* Wider gradient layer on phones so the hero only ever sees its soft middle, never the faded edge. */
   .aurora { left: -60%; right: -60%; }
