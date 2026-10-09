@@ -84,58 +84,53 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* ---------- hero ---------- */
 .hero { position: relative; height: clamp(600px, calc(100svh + 10px), 770px); background: #000; overflow: hidden; clip-path: inset(0 0 2px 0); padding-top: 92px; }
 .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: clamp(60px, 14svh, 170px) 16px 0; text-align: center; color: #fff; }
-.icon-draw { position: absolute; inset: 0; width: 65px; height: 47px; overflow: visible; }
-.hero-mark { position: relative; display: block; width: 65px; height: 47px; }
+.icon-draw { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.hero-mark { position: relative; display: block; width: 32.5px; height: 23.5px; }
 /* Silver highlight clipped to the icon shape; each one rides in with the gradient pass it belongs to. */
-.shines { position: absolute; inset: 0; pointer-events: none; opacity: 0; animation: icon-reveal .7s ease-out 2.2s forwards; }
-/* Stroke draws itself on load; the shimmer fades in once the outline is complete. */
-.draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: icon-draw 1.9s cubic-bezier(.65, 0, .25, 1) .25s forwards; }
-.draw.d-ridge { animation-delay: .4s; }
-@keyframes icon-draw { to { stroke-dashoffset: 0; } }
-@keyframes icon-reveal { to { opacity: 1; } }
-.shine {
-  position: absolute; inset: 0; opacity: 0; pointer-events: none;
-  -webkit-mask: url("assets/hero-icon-mask.svg") center / 100% 100% no-repeat; mask: url("assets/hero-icon-mask.svg") center / 100% 100% no-repeat;
-  background-size: 300% 100%; background-repeat: no-repeat;
-  animation-duration: 10s; animation-timing-function: cubic-bezier(.45, 0, .2, 1); animation-iteration-count: infinite; animation-fill-mode: both;
+/* The icon plays one intro only: a soft diagonal wipe growing out of the top-left corner. After that it is completely static. */
+.icon-draw {
+  -webkit-mask-image: linear-gradient(135deg, #000 0, #000 42%, transparent 58%); mask-image: linear-gradient(135deg, #000 0, #000 42%, transparent 58%);
+  -webkit-mask-size: 320% 320%; mask-size: 320% 320%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: 100% 100%; mask-position: 100% 100%;
+  animation: icon-wipe 2s cubic-bezier(.3, .45, .3, 1) .2s forwards;
 }
-.shine-right {
-  background-image: linear-gradient(105deg, transparent 30%, rgba(190, 198, 206, .22) 36%, #cfd6dd 41%, #f4f7f9 45%, #fff 48%, #f0f3f6 51%, #cfd6dd 56%, rgba(190, 198, 206, .22) 61%, transparent 68%);
-  animation-name: shine-right; animation-delay: -1.5s;
-}
-.shine-left {
-  background-image: linear-gradient(75deg, transparent 30%, rgba(190, 198, 206, .22) 36%, #cfd6dd 41%, #f4f7f9 45%, #fff 48%, #f0f3f6 51%, #cfd6dd 56%, rgba(190, 198, 206, .22) 61%, transparent 68%);
-  animation-name: shine-left; animation-delay: 3.5s;
-}
+@keyframes icon-wipe { to { -webkit-mask-position: 0% 0%; mask-position: 0% 0%; } }
 .hero h1 { font-size: 80px; font-weight: 500; line-height: 80px; letter-spacing: -2px; }
 .hero-sub { font-size: 24px; line-height: normal; margin-top: 11px; }
 /* Sweeping gradient: slides in from the right on load, then loops out and back in.
    The layer is wider/taller than the hero and masked so every edge feathers to black. */
-.aurora-intro { position: absolute; inset: 0; animation: aurora-intro 1.4s cubic-bezier(.16, 1, .3, 1) both; }
+/* Organic motion: both colour masses stay in place and slowly wander. Position, tilt and size each run on their own
+   long, eased cycle (different lengths per layer), so the combined movement never visibly repeats and never travels edge to edge. */
+.aurora-wrap { position: absolute; inset: 0; }
+.wrap-a { animation: aurora-bloom 1.8s cubic-bezier(.22, 1, .36, 1) both, drift-x 10s ease-in-out -4s infinite alternate; }
+.wrap-b { animation: aurora-bloom 1.8s cubic-bezier(.22, 1, .36, 1) both, drift-x 12s ease-in-out -9s infinite alternate-reverse; }
 .aurora {
   position: absolute; top: -10%; bottom: -10%; left: -20%; right: -20%; will-change: transform;
   /* One continuous field: an oklab colour ramp plus two very wide, eased glows, blurred heavily.
      The fade-out is a single eased radial mask, so there are no straight edges anywhere. */
   background:
+    var(--lobe, linear-gradient(transparent, transparent)),
     radial-gradient(ellipse 60% 80% at 92% 105%, color-mix(in srgb, var(--warm) 75%, transparent) 0, color-mix(in srgb, var(--warm) 50%, transparent) 20%, color-mix(in srgb, var(--warm) 22%, transparent) 45%, color-mix(in srgb, var(--warm) 6%, transparent) 70%, transparent 100%),
     radial-gradient(ellipse 70% 90% at 88% 20%, color-mix(in srgb, var(--glow) 80%, transparent) 0, color-mix(in srgb, var(--glow) 50%, transparent) 25%, color-mix(in srgb, var(--glow) 20%, transparent) 50%, color-mix(in srgb, var(--glow) 5%, transparent) 75%, transparent 100%),
     linear-gradient(in oklab to right, color-mix(in srgb, var(--g1) 0%, transparent) 4%, var(--g1) 28%, var(--g2) 44%, var(--g3) 60%, var(--g4) 76%, var(--g5) 92%);
-  filter: blur(56px);
-  -webkit-mask-image: radial-gradient(ellipse 62% 70% at 50% 50%, #000 0, #000 42%, rgba(0,0,0,.97) 47%, rgba(0,0,0,.9) 52%, rgba(0,0,0,.8) 57%, rgba(0,0,0,.68) 62%, rgba(0,0,0,.55) 67%, rgba(0,0,0,.42) 72%, rgba(0,0,0,.3) 77%, rgba(0,0,0,.19) 82%, rgba(0,0,0,.1) 87%, rgba(0,0,0,.04) 93%, transparent 100%);
-  mask-image: radial-gradient(ellipse 62% 70% at 50% 50%, #000 0, #000 42%, rgba(0,0,0,.97) 47%, rgba(0,0,0,.9) 52%, rgba(0,0,0,.8) 57%, rgba(0,0,0,.68) 62%, rgba(0,0,0,.55) 67%, rgba(0,0,0,.42) 72%, rgba(0,0,0,.3) 77%, rgba(0,0,0,.19) 82%, rgba(0,0,0,.1) 87%, rgba(0,0,0,.04) 93%, transparent 100%);
-  --dir: 1; --dy: 0%;
-  animation: aurora-pass 10s linear -1.5s infinite both;
+  filter: blur(48px);
+  -webkit-mask-image: radial-gradient(ellipse 62% 70% at 50% 50%, #000 0, #000 42%, rgba(0,0,0,.97) 47%, rgba(0,0,0,.9) 52%, rgba(0,0,0,.8) 57%, rgba(0,0,0,.68) 62%, rgba(0,0,0,.55) 67%, rgba(0,0,0,.42) 72%, rgba(0,0,0,.3) 77%, rgba(0,0,0,.19) 82%, rgba(0,0,0,.1) 87%, rgba(0,0,0,.04) 93%, transparent 100%), linear-gradient(to right, rgba(0,0,0,0.000) 0.00%, rgba(0,0,0,0.016) 2.00%, rgba(0,0,0,0.104) 4.00%, rgba(0,0,0,0.275) 6.00%, rgba(0,0,0,0.500) 8.00%, rgba(0,0,0,0.725) 10.00%, rgba(0,0,0,0.896) 12.00%, rgba(0,0,0,0.984) 14.00%, rgba(0,0,0,1.000) 16.00%, rgba(0,0,0,1.000) 84.00%, rgba(0,0,0,0.984) 86.00%, rgba(0,0,0,0.896) 88.00%, rgba(0,0,0,0.725) 90.00%, rgba(0,0,0,0.500) 92.00%, rgba(0,0,0,0.275) 94.00%, rgba(0,0,0,0.104) 96.00%, rgba(0,0,0,0.016) 98.00%, rgba(0,0,0,0.000) 100.00%), linear-gradient(to bottom, rgba(0,0,0,0.000) 0.00%, rgba(0,0,0,0.016) 1.75%, rgba(0,0,0,0.104) 3.50%, rgba(0,0,0,0.275) 5.25%, rgba(0,0,0,0.500) 7.00%, rgba(0,0,0,0.725) 8.75%, rgba(0,0,0,0.896) 10.50%, rgba(0,0,0,0.984) 12.25%, rgba(0,0,0,1.000) 14.00%, rgba(0,0,0,1.000) 86.00%, rgba(0,0,0,0.984) 87.75%, rgba(0,0,0,0.896) 89.50%, rgba(0,0,0,0.725) 91.25%, rgba(0,0,0,0.500) 93.00%, rgba(0,0,0,0.275) 94.75%, rgba(0,0,0,0.104) 96.50%, rgba(0,0,0,0.016) 98.25%, rgba(0,0,0,0.000) 100.00%);
+  -webkit-mask-composite: source-in, source-in;
+  mask-image: radial-gradient(ellipse 62% 70% at 50% 50%, #000 0, #000 42%, rgba(0,0,0,.97) 47%, rgba(0,0,0,.9) 52%, rgba(0,0,0,.8) 57%, rgba(0,0,0,.68) 62%, rgba(0,0,0,.55) 67%, rgba(0,0,0,.42) 72%, rgba(0,0,0,.3) 77%, rgba(0,0,0,.19) 82%, rgba(0,0,0,.1) 87%, rgba(0,0,0,.04) 93%, transparent 100%), linear-gradient(to right, rgba(0,0,0,0.000) 0.00%, rgba(0,0,0,0.016) 2.00%, rgba(0,0,0,0.104) 4.00%, rgba(0,0,0,0.275) 6.00%, rgba(0,0,0,0.500) 8.00%, rgba(0,0,0,0.725) 10.00%, rgba(0,0,0,0.896) 12.00%, rgba(0,0,0,0.984) 14.00%, rgba(0,0,0,1.000) 16.00%, rgba(0,0,0,1.000) 84.00%, rgba(0,0,0,0.984) 86.00%, rgba(0,0,0,0.896) 88.00%, rgba(0,0,0,0.725) 90.00%, rgba(0,0,0,0.500) 92.00%, rgba(0,0,0,0.275) 94.00%, rgba(0,0,0,0.104) 96.00%, rgba(0,0,0,0.016) 98.00%, rgba(0,0,0,0.000) 100.00%), linear-gradient(to bottom, rgba(0,0,0,0.000) 0.00%, rgba(0,0,0,0.016) 1.75%, rgba(0,0,0,0.104) 3.50%, rgba(0,0,0,0.275) 5.25%, rgba(0,0,0,0.500) 7.00%, rgba(0,0,0,0.725) 8.75%, rgba(0,0,0,0.896) 10.50%, rgba(0,0,0,0.984) 12.25%, rgba(0,0,0,1.000) 14.00%, rgba(0,0,0,1.000) 86.00%, rgba(0,0,0,0.984) 87.75%, rgba(0,0,0,0.896) 89.50%, rgba(0,0,0,0.725) 91.25%, rgba(0,0,0,0.500) 93.00%, rgba(0,0,0,0.275) 94.75%, rgba(0,0,0,0.104) 96.50%, rgba(0,0,0,0.016) 98.25%, rgba(0,0,0,0.000) 100.00%);
+  mask-composite: intersect, intersect;
+  animation: drift-y 8s ease-in-out -2s infinite alternate, drift-tilt 13s ease-in-out -6s infinite alternate, drift-size 11s ease-in-out -5s infinite alternate;
   transition: --g1 .8s ease, --g2 .8s ease, --g3 .8s ease, --g4 .8s ease, --g5 .8s ease, --glow .8s ease, --warm .8s ease;
 }
 /* Second pass is the mirror image, half a cycle later. The negative delay on the first pass means the page opens with it already sliding into place. Each pass is fully in before the other starts leaving, so something is always on screen. */
-.aurora.from-left { --dir: -1; transform: scaleX(-1); animation-delay: 3.5s; }
+.aurora.from-right { --lobe: radial-gradient(ellipse 34% 46% at 70% 56%, color-mix(in srgb, var(--g1) 42%, transparent) 0, color-mix(in srgb, var(--g1) 27%, transparent) 25%, color-mix(in srgb, var(--g1) 11%, transparent) 50%, color-mix(in srgb, var(--g1) 3%, transparent) 75%, transparent 100%); }
+.aurora.from-left { transform: scaleX(-1); animation: drift-y 9s ease-in-out -7s infinite alternate-reverse, drift-tilt 15s ease-in-out -12s infinite alternate-reverse, drift-size 13s ease-in-out -8s infinite alternate; }
 /* Bottom of the hero dissolves into the grey of the pricing section (smootherstep ramp, so there is no visible start or end line); the cards sit above this layer. */
 .hero::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: clamp(180px, 42%, 300px); pointer-events: none; z-index: 0;
   background: linear-gradient(to bottom, rgba(238,238,238,0.000) 0%, rgba(238,238,238,0.001) 5%, rgba(238,238,238,0.009) 10%, rgba(238,238,238,0.027) 15%, rgba(238,238,238,0.058) 20%, rgba(238,238,238,0.104) 25%, rgba(238,238,238,0.163) 30%, rgba(238,238,238,0.235) 35%, rgba(238,238,238,0.317) 40%, rgba(238,238,238,0.407) 45%, rgba(238,238,238,0.500) 50%, rgba(238,238,238,0.593) 55%, rgba(238,238,238,0.683) 60%, rgba(238,238,238,0.765) 65%, rgba(238,238,238,0.837) 70%, rgba(238,238,238,0.896) 75%, rgba(238,238,238,0.942) 80%, rgba(238,238,238,0.973) 85%, rgba(238,238,238,0.991) 90%, rgba(238,238,238,0.999) 95%, rgba(238,238,238,1.000) 100%);
 }
 .scrim { position: absolute; inset: 0; background: linear-gradient(rgba(0, 0, 0, .35), transparent 38%); pointer-events: none; }
-.hero-inner { text-shadow: 0 1px 12px rgba(0, 20, 40, .16); }
+.hero-inner { text-shadow: 0 1px 6px rgba(0, 20, 40, .06); }
 .hero-sub .code {
   position: relative; display: inline; padding: 0; margin: 0; border: 0; background: none; cursor: pointer;
   font: inherit; color: inherit; letter-spacing: inherit; -webkit-tap-highlight-color: transparent;
@@ -162,30 +157,12 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.6 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-@keyframes aurora-intro { from { transform: translateX(70%); opacity: 0; } to { transform: none; opacity: 1; } }
-/* One smooth, one-directional glide in; slow hold; one smooth glide out. Opacity peaks mid-way in so the highlight blooms rather than switches on. */
-@keyframes shine-right {
-  0%   { background-position: -14% 0; opacity: 0; animation-timing-function: cubic-bezier(.3, .0, .2, 1); }
-  14%  { opacity: 1; }
-  32%  { background-position: 34% 0; opacity: .6; animation-timing-function: linear; }
-  60%  { background-position: 31% 0; opacity: .6; animation-timing-function: cubic-bezier(.5, 0, .7, 1); }
-  92%, 100% { background-position: -14% 0; opacity: 0; }
-}
-@keyframes shine-left {
-  0%   { background-position: 114% 0; opacity: 0; animation-timing-function: cubic-bezier(.3, .0, .2, 1); }
-  14%  { opacity: 1; }
-  32%  { background-position: 66% 0; opacity: .6; animation-timing-function: linear; }
-  60%  { background-position: 69% 0; opacity: .6; animation-timing-function: cubic-bezier(.5, 0, .7, 1); }
-  92%, 100% { background-position: 114% 0; opacity: 0; }
-}
-@keyframes aurora-pass {
-  /* --dy is re-rolled each pass (see script), so the sweep arrives and leaves on a varying diagonal */
-  0%   { translate: calc(var(--dir) * 100%) var(--dy); animation-timing-function: cubic-bezier(.2, .65, .3, 1); }
-  30%  { translate: calc(var(--dir) * -2%) calc(var(--dy) * .06); animation-timing-function: linear; }
-  62%  { translate: calc(var(--dir) * -9%) calc(var(--dy) * -.12); animation-timing-function: cubic-bezier(.55, .1, .75, .45); }
-  90%, 100% { translate: calc(var(--dir) * 100%) calc(var(--dy) * -1); }
-}
-@media (prefers-reduced-motion: reduce) { .aurora, .aurora-intro, .shine { animation: none; } .draw { animation: none; stroke-dashoffset: 0; } .shines { animation: none; opacity: 1; } .aurora.from-left { display: none; } }
+@keyframes aurora-bloom { from { opacity: 0; scale: .93; } to { opacity: 1; scale: 1; } }
+@keyframes drift-x { from { translate: -13% 0; } to { translate: 13% 0; } }
+@keyframes drift-y { from { translate: 0 -9%; } to { translate: 0 9%; } }
+@keyframes drift-tilt { from { rotate: -9deg; } to { rotate: 9deg; } }
+@keyframes drift-size { from { scale: .96; } to { scale: 1.2; } }
+@media (prefers-reduced-motion: reduce) { .aurora, .aurora-wrap { animation: none; } .icon-draw { animation: none; -webkit-mask-position: 0 0; mask-position: 0 0; } .aurora.from-left { display: none; } }
 
 /* ---------- rings ---------- */
 /* The cards rise into the lower part of the hero so they're already in view on landing. */
