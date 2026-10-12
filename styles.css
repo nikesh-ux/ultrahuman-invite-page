@@ -199,7 +199,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .card-body { display: flex; flex: 1; flex-direction: column; justify-content: space-between; gap: 12px; padding: 16px 8px 14px; }
 .card h2 { font-size: 16px; font-weight: 500; line-height: 17.6px; letter-spacing: -.48px; }
 .card-text p { padding: 4px 0 16px; min-height: 48px; font-size: 12px; line-height: 15.6px; letter-spacing: -.42px; color: var(--ink-70); }
-.card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.card-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; }
 .price { display: flex; flex-direction: column; justify-content: center; min-height: 41px; letter-spacing: -.42px; white-space: nowrap; }
 .price-row { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 6px; row-gap: 0; margin-bottom: 0; }
 .price s { flex-basis: 100%; font-size: 14px; line-height: 18px; color: var(--ink-50); }
@@ -208,11 +208,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .price-meta { display: flex; align-items: center; margin-top: 6px; }
 /* Promo code beside the tax note: plain grey underlined text with the copy icon, no chip. */
 .card-code.in-price {
-  position: static; height: auto; padding: 0; gap: 5px; background: none; border-radius: 0; font-size: 12px; line-height: 20px; letter-spacing: -.3px; color: rgba(0, 0, 0, .55);
+  position: static; height: auto; padding: 0; gap: 5px; background: none; border-radius: 0; font-size: 14px; line-height: 22px; letter-spacing: -.3px; font-weight: 500; color: var(--blue);
   -webkit-backdrop-filter: none; backdrop-filter: none;
 }
 .card-code.in-price .cc-code { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-skip-ink: none; }
-.card-code.in-price:hover { color: rgba(0, 0, 0, .8); background: none; }
+.card-code.in-price:hover { color: #2145db; background: none; }
 .card-code.in-price[data-copied] { background: none; padding-right: 0; }
 .badge {
   position: absolute; top: 16px; right: 16px; display: flex; align-items: center; height: 28px; padding: 0 16px;
@@ -361,7 +361,7 @@ button.chip { padding: 4px 6px 4px 4px; }
   html[data-layout="a"] .card ~ .intro { margin-top: 60px; }
   /* Heading-row code: no fill, just the underlined code with its copy icon. In this layout the gradient only covers the main heading and fades out before the first row, so the rows sit on the light page. */
   html[data-layout="a"] .intro .card-code.in-intro {
-    height: auto; padding: 0; gap: 7px; background: none; border-radius: 0; font-size: 14px; letter-spacing: -.28px; line-height: 20px; color: rgba(0, 0, 0, .55);
+    height: auto; padding: 0; gap: 7px; background: none; border-radius: 0; font-size: 14px; letter-spacing: -.28px; line-height: 20px; color: var(--blue);
     -webkit-backdrop-filter: none; backdrop-filter: none;
   }
   html[data-layout="a"] .intro .card-code.in-intro .cc-code { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-skip-ink: none; }
