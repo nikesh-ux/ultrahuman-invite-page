@@ -488,3 +488,30 @@ button.chip { padding: 4px 6px 4px 4px; }
 .versions button[aria-pressed="true"] { background: #fff; color: #111; }
 .versions button:focus-visible { outline: 2px solid rgba(255, 255, 255, .9); outline-offset: 2px; }
 @media (max-width: 760px) { .versions { left: 12px; bottom: max(12px, env(safe-area-inset-bottom)); } }
+
+/* ---------- v3: Buy now opens the buy link with the code already applied; "ChaseNN applied" sits under the price ---------- */
+.apply-cta, .price-applied { display: none; }
+html[data-card="cta"] .apply-cta {
+  display: inline-flex; align-items: center; justify-content: center; flex: none; width: 112px; height: 32px; padding: 0 12px; border-radius: 50px;
+  background: var(--blue); color: #fff; font-size: 13px; line-height: 16px; letter-spacing: -.1px; white-space: nowrap;
+  transition: background-color .2s cubic-bezier(.32, .08, .24, 1);
+}
+html[data-card="cta"] .apply-cta:hover, html[data-card="cta"] .apply-cta:focus-visible { background: #2145db; }
+html[data-card="cta"] .price { align-items: flex-start; }
+html[data-card="cta"] .price-applied { display: inline-flex; align-items: center; gap: 5px; margin-top: 4px; font-size: 14px; font-weight: 500; line-height: 20px; letter-spacing: -.2px; color: var(--blue); white-space: nowrap; }
+html[data-card="cta"] .card-foot .pill-blue, html[data-card="cta"] .price-meta { display: none; }
+@media (max-width: 760px) {
+  /* The heading rows stay in v3; the code now lives in the card, so the chip leaves the row. */
+  html[data-card="cta"][data-layout="a"] .intro .card-code { display: none; }
+  /* In the carousel the price row and the "applied" row sit closer together. */
+  html[data-card="cta"][data-layout="a"] .pgroup:last-child .card-foot { row-gap: 6px; align-items: center; }
+  html[data-card="cta"][data-layout="a"] .pgroup:last-child .price-applied { margin-top: 0; }
+  html[data-card="cta"] .card-foot .apply-cta { grid-column: 2; grid-row: 2; }
+  /* Same price block as desktop: struck price on top, price + tax below, then the applied line. */
+  html[data-card="cta"][data-layout="a"] .pgroup .card .price-meta { display: none; }
+  html[data-card="cta"][data-layout="a"] .price-row { flex-wrap: wrap; align-items: baseline; column-gap: 6px; margin-bottom: 0; }
+  html[data-card="cta"][data-layout="a"] .price-row s { flex-basis: 100%; line-height: 18px; }
+  html[data-card="cta"][data-layout="a"] .price-row strong { line-height: 22px; }
+  html[data-card="cta"][data-layout="a"] .price-row span { flex-basis: auto; margin-top: 0; line-height: 22px; }
+  html[data-card="cta"][data-layout="a"] .card-foot { align-items: end; }
+}
