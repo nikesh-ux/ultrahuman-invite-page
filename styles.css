@@ -21,7 +21,7 @@
 @property --warm { syntax: "<color>"; inherits: true; initial-value: #f0cdc3; }
 :root, :root[data-theme="v1"] { --g1: #00304f; --g2: #2f6f9c; --g3: #8fd0e0; --g4: #cdf0ef; --g5: #e9f9f5; --glow: #e8fbf7; --warm: #f0cdc3; }
 /* PLACEHOLDERS for v2-v6 until the real colours are supplied: replace the seven values in each block. */
-:root[data-theme="v2"] { --g1: #2a0f4a; --g2: #7a3fb0; --g3: #c79bf0; --g4: #f0d6f5; --g5: #fbeefa; --glow: #fbeefa; --warm: #f7c6b5; }
+:root[data-theme="v2"] { --g1: #07071a; --g2: #1c1c72; --g3: #5b4a9a; --g4: #a07fb8; --g5: #dccbe8; --glow: #e6d6ee; --warm: #8a6aa6; }
 :root[data-theme="v3"] { --g1: #05382f; --g2: #1f8a6e; --g3: #7fd6b8; --g4: #d3f3e4; --g5: #effaf3; --glow: #eefaf1; --warm: #f2dfb0; }
 :root[data-theme="v4"] { --g1: #3d2a0b; --g2: #a9791f; --g3: #d4a84a; --g4: #ecd29a; --g5: #faf0d8; --glow: #fbf1d8; --warm: #e2c080; }
 :root[data-theme="v5"] { --g1: #4a0a22; --g2: #c2235a; --g3: #f27aa0; --g4: #fcc9d8; --g5: #fff0f4; --glow: #fff0f3; --warm: #ffd2a8; }
@@ -77,15 +77,20 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .pill {
   display: inline-flex; align-items: center; justify-content: center; white-space: nowrap;
   border-radius: 50px; font-size: 13px; letter-spacing: -.104px; text-align: center;
+  transition: background-color .15s cubic-bezier(.32, .08, .24, 1), color .15s cubic-bezier(.32, .08, .24, 1), box-shadow .15s cubic-bezier(.32, .08, .24, 1), transform .15s cubic-bezier(.32, .08, .24, 1);
 }
+/* Hover: the blue CTA just gets a touch brighter; the white header pill picks up a soft glow. */
+.pill-blue:hover, .pill-blue:focus-visible { background: #2145db; }
+.pill-light:hover, .pill-light:focus-visible { box-shadow: 0 0 0 4px rgba(255, 255, 255, .22); }
+.pill:active { transform: scale(.97); }
 .pill-light { min-width: 120px; padding: 5px 27px 6px 23px; background: #fff; color: #111; line-height: 24px; border: 1px solid transparent; }
 .pill-blue { width: 112px; height: 32px; padding: 0 12px; background: var(--blue); color: #fff; line-height: 16px; }
 
 /* ---------- hero ---------- */
-.hero { position: relative; height: 700px; background: #000; overflow: hidden; clip-path: inset(0 0 2px 0); padding-top: 92px;
+.hero { position: relative; height: 840px; background: #000; overflow: hidden; clip-path: inset(0 0 2px 0); padding-top: 92px;
   /* The whole banner (black base, gradient, grain) dissolves into the page grey together, so the colour fades out instead of passing through a muddy overlay. */
-  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 320px), rgba(0,0,0,0.999) calc(100% - 306.7px), rgba(0,0,0,0.995) calc(100% - 293.3px), rgba(0,0,0,0.984) calc(100% - 280.0px), rgba(0,0,0,0.965) calc(100% - 266.7px), rgba(0,0,0,0.935) calc(100% - 253.3px), rgba(0,0,0,0.896) calc(100% - 240.0px), rgba(0,0,0,0.848) calc(100% - 226.7px), rgba(0,0,0,0.790) calc(100% - 213.3px), rgba(0,0,0,0.725) calc(100% - 200.0px), rgba(0,0,0,0.653) calc(100% - 186.7px), rgba(0,0,0,0.578) calc(100% - 173.3px), rgba(0,0,0,0.500) calc(100% - 160.0px), rgba(0,0,0,0.422) calc(100% - 146.7px), rgba(0,0,0,0.347) calc(100% - 133.3px), rgba(0,0,0,0.275) calc(100% - 120.0px), rgba(0,0,0,0.210) calc(100% - 106.7px), rgba(0,0,0,0.152) calc(100% - 93.3px), rgba(0,0,0,0.104) calc(100% - 80.0px), rgba(0,0,0,0.065) calc(100% - 66.7px), rgba(0,0,0,0.035) calc(100% - 53.3px), rgba(0,0,0,0.016) calc(100% - 40.0px), rgba(0,0,0,0.005) calc(100% - 26.7px), rgba(0,0,0,0.001) calc(100% - 13.3px), rgba(0,0,0,0.000) calc(100% - 0.0px)); mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 320px), rgba(0,0,0,0.999) calc(100% - 306.7px), rgba(0,0,0,0.995) calc(100% - 293.3px), rgba(0,0,0,0.984) calc(100% - 280.0px), rgba(0,0,0,0.965) calc(100% - 266.7px), rgba(0,0,0,0.935) calc(100% - 253.3px), rgba(0,0,0,0.896) calc(100% - 240.0px), rgba(0,0,0,0.848) calc(100% - 226.7px), rgba(0,0,0,0.790) calc(100% - 213.3px), rgba(0,0,0,0.725) calc(100% - 200.0px), rgba(0,0,0,0.653) calc(100% - 186.7px), rgba(0,0,0,0.578) calc(100% - 173.3px), rgba(0,0,0,0.500) calc(100% - 160.0px), rgba(0,0,0,0.422) calc(100% - 146.7px), rgba(0,0,0,0.347) calc(100% - 133.3px), rgba(0,0,0,0.275) calc(100% - 120.0px), rgba(0,0,0,0.210) calc(100% - 106.7px), rgba(0,0,0,0.152) calc(100% - 93.3px), rgba(0,0,0,0.104) calc(100% - 80.0px), rgba(0,0,0,0.065) calc(100% - 66.7px), rgba(0,0,0,0.035) calc(100% - 53.3px), rgba(0,0,0,0.016) calc(100% - 40.0px), rgba(0,0,0,0.005) calc(100% - 26.7px), rgba(0,0,0,0.001) calc(100% - 13.3px), rgba(0,0,0,0.000) calc(100% - 0.0px)); }
-.hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 92px 16px 0; text-align: center; color: #fff; }
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 460px), rgba(0,0,0,0.999) calc(100% - 440.8px), rgba(0,0,0,0.995) calc(100% - 421.7px), rgba(0,0,0,0.984) calc(100% - 402.5px), rgba(0,0,0,0.965) calc(100% - 383.3px), rgba(0,0,0,0.935) calc(100% - 364.2px), rgba(0,0,0,0.896) calc(100% - 345.0px), rgba(0,0,0,0.848) calc(100% - 325.8px), rgba(0,0,0,0.790) calc(100% - 306.7px), rgba(0,0,0,0.725) calc(100% - 287.5px), rgba(0,0,0,0.653) calc(100% - 268.3px), rgba(0,0,0,0.578) calc(100% - 249.2px), rgba(0,0,0,0.500) calc(100% - 230.0px), rgba(0,0,0,0.422) calc(100% - 210.8px), rgba(0,0,0,0.347) calc(100% - 191.7px), rgba(0,0,0,0.275) calc(100% - 172.5px), rgba(0,0,0,0.210) calc(100% - 153.3px), rgba(0,0,0,0.152) calc(100% - 134.2px), rgba(0,0,0,0.104) calc(100% - 115.0px), rgba(0,0,0,0.065) calc(100% - 95.8px), rgba(0,0,0,0.035) calc(100% - 76.7px), rgba(0,0,0,0.016) calc(100% - 57.5px), rgba(0,0,0,0.005) calc(100% - 38.3px), rgba(0,0,0,0.001) calc(100% - 19.2px), rgba(0,0,0,0.000) calc(100% - 0.0px)); mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 460px), rgba(0,0,0,0.999) calc(100% - 440.8px), rgba(0,0,0,0.995) calc(100% - 421.7px), rgba(0,0,0,0.984) calc(100% - 402.5px), rgba(0,0,0,0.965) calc(100% - 383.3px), rgba(0,0,0,0.935) calc(100% - 364.2px), rgba(0,0,0,0.896) calc(100% - 345.0px), rgba(0,0,0,0.848) calc(100% - 325.8px), rgba(0,0,0,0.790) calc(100% - 306.7px), rgba(0,0,0,0.725) calc(100% - 287.5px), rgba(0,0,0,0.653) calc(100% - 268.3px), rgba(0,0,0,0.578) calc(100% - 249.2px), rgba(0,0,0,0.500) calc(100% - 230.0px), rgba(0,0,0,0.422) calc(100% - 210.8px), rgba(0,0,0,0.347) calc(100% - 191.7px), rgba(0,0,0,0.275) calc(100% - 172.5px), rgba(0,0,0,0.210) calc(100% - 153.3px), rgba(0,0,0,0.152) calc(100% - 134.2px), rgba(0,0,0,0.104) calc(100% - 115.0px), rgba(0,0,0,0.065) calc(100% - 95.8px), rgba(0,0,0,0.035) calc(100% - 76.7px), rgba(0,0,0,0.016) calc(100% - 57.5px), rgba(0,0,0,0.005) calc(100% - 38.3px), rgba(0,0,0,0.001) calc(100% - 19.2px), rgba(0,0,0,0.000) calc(100% - 0.0px)); }
+.hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 117px 16px 0; text-align: center; color: #fff; }
 /* Silver highlight clipped to the icon shape; each one rides in with the gradient pass it belongs to. */
 .hero h1 { font-size: 72px; font-weight: 500; line-height: 75px; letter-spacing: -3px; }
 .hero-sub { font-size: 24px; line-height: normal; margin-top: 11px; }
@@ -163,15 +168,25 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* ---------- rings ---------- */
 /* The cards rise into the lower part of the hero so they're already in view on landing. */
 /* 128px of breathing room above and below the cards. The top 128px (plus the 90px peek) overlaps the hero's fade, so the cards still show on landing. */
-.rings { position: relative; margin-top: -348px; padding: 128px 0; background: linear-gradient(to bottom, rgba(238,238,238,0) 344px, #eee 350px); }
+.rings { position: relative; margin-top: -488px; padding: 128px 0; background: linear-gradient(to bottom, rgba(238,238,238,0) 484px, #eee 490px); }
 /* The section's top slice overlaps the banner (the cards ride up over the gradient). Let clicks pass through that empty slice to the promo code; the cards stay clickable. */
 .rings { pointer-events: none; }
-.rings .cards { pointer-events: auto; }
+.rings .cards, .rings .switch { pointer-events: auto; }
+/* Product toggle: phones only. */
+.switch { display: none; }
+.media-wrap { display: block; position: relative; }
 .cards { display: grid; grid-template-columns: repeat(2, 364px); gap: 24px; justify-content: center; max-width: 784px; margin: 0 auto; padding: 0 16px; box-sizing: content-box; }
 .card {
   position: relative; display: flex; flex-direction: column; padding: 8px; overflow: hidden;
-  background: rgba(245, 245, 245, .2); border-radius: 16px; box-shadow: 0 24px 52px -32px rgba(0, 0, 0, .3), inset 0 0 0 1px rgba(255, 255, 255, .45);
-  -webkit-backdrop-filter: blur(28px) saturate(1.3); backdrop-filter: blur(28px) saturate(1.3);
+  background: rgba(245, 245, 245, .2); border-radius: 16px; box-shadow: 0 24px 52px -32px rgba(0, 0, 0, .3);
+  -webkit-backdrop-filter: blur(4px) saturate(1.15); backdrop-filter: blur(4px) saturate(1.15);
+}
+/* Glass edge: a thin bevel that catches the light on one diagonal and bounces a softer one back on the other (Figma glass: depth 1, light 302deg, intensity .8). */
+.card::before {
+  content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit; padding: 1.5px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, .22) 28%, rgba(255, 255, 255, .12) 55%, rgba(255, 255, 255, .55) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
 }
 .card-media { position: relative; display: block; height: 335px; border-radius: 12px; overflow: hidden; }
 .card-media img { position: absolute; left: calc(50% + 3px); top: calc(50% + var(--dy, 0px)); width: 102%; height: 131.55%; max-width: none; transform: translate(-50%, -50%); object-fit: cover; }
@@ -185,10 +200,23 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .price strong { font-size: 16px; font-weight: 500; line-height: 16px; }
 .price span { font-size: 14px; line-height: 24px; color: rgba(0, 0, 0, .55); }
 .badge {
-  position: absolute; top: 16px; right: 16px; display: flex; align-items: center; height: 28px; padding: 0 16px;
+  position: absolute; top: 16px; left: 16px; display: flex; align-items: center; height: 28px; padding: 0 16px;
   background: rgba(245, 245, 245, .8); border-radius: 48px;
   font-size: 12px; font-weight: 500; line-height: 12px; letter-spacing: -.24px; color: var(--blue);
 }
+/* Tap-to-copy promo code, top right of the product image (same pill as the discount badge). */
+.card-code {
+  position: absolute; top: 8px; right: 8px; z-index: 3; display: flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px 0 16px;
+  background: rgba(245, 245, 245, .8); border-radius: 48px; font-size: 12px; font-weight: 500; line-height: 12px; letter-spacing: -.24px; color: var(--blue);
+  cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color .15s cubic-bezier(.32, .08, .24, 1), transform .15s cubic-bezier(.32, .08, .24, 1);
+}
+.card-code .cc-label { display: none; }
+.card-code .cc-code { font-weight: 500; }
+.card-code:hover { background: rgba(255, 255, 255, .95); }
+.card-code:active { transform: scale(.97); }
+.card-code[data-copied] { background: #fff; padding-right: 16px; }
+.card-code[data-copied] .cc-ico { display: none; }
+.card-code[data-copied] .cc-code::after { content: " copied"; font-weight: 500; }
 
 /* Micro entrance: cards rise and fade in, with the photo settling from a slight zoom. */
 .js .card { opacity: 0; transform: translateY(28px) scale(.98); }
@@ -276,14 +304,29 @@ button.chip { padding: 4px 6px 4px 4px; }
   .icon-btn > img:not(.menu-line) { width: 28px; height: 28px; }
   .pill-light { min-width: 0; padding: 4px 14px 5px; font-size: 12px; line-height: 22px; }
   /* Phones: centre the text block between the header and the cards that peek in below, both ways. */
-  .hero { display: flex; align-items: center; justify-content: center; height: 680px; padding: 89px 0 220px; }
-  .hero-inner { width: 100%; padding-top: 0; text-align: center; }
+  .hero { display: block; height: 820px; padding: 89px 0 0; }
+  .hero-inner { width: 100%; padding: 28px 16px 0; text-align: center; }
+  /* Products lead on phones: the heading sits tight under the header, the promo line is dropped, and the cards start at 232px so the whole first card is in view. */
+  .hero-sub { display: none; }
+  .rings { margin-top: -597px; padding: 0 0 36px;  background: linear-gradient(to bottom, rgba(238,238,238,0) 591px, #eee 597px); }
+  .switch {
+    display: flex; gap: 4px; width: fit-content; margin: 0 auto 26px; padding: 4px; border-radius: 999px; position: relative;
+    background: rgba(255, 255, 255, .2); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .45);
+    -webkit-backdrop-filter: blur(8px) saturate(1.2); backdrop-filter: blur(8px) saturate(1.2);
+  }
+  .switch button { min-width: 104px; height: 28px; padding: 0 14px; border-radius: 999px; font-size: 13px; letter-spacing: -.104px; color: #fff; transition: background-color .2s cubic-bezier(.32, .08, .24, 1), color .2s cubic-bezier(.32, .08, .24, 1); }
+  .switch button.is-on { background: #fff; color: #111; }
+  .cards { row-gap: 0; }
+  .gallery { padding-top: 44px; }
+  /* Phones: a toggle swaps one product at a time. */
+  .cards[data-active="pro"] [data-p="air"], .cards[data-active="air"] [data-p="pro"] { display: none; }
+  .card-media { aspect-ratio: 348 / 315; }
   /* Wider gradient layer on phones so the hero only ever sees its soft middle, never the faded edge. */
   .aurora { left: -60%; right: -60%; }
-  .hero h1 { font-size: 44px; line-height: 48px; letter-spacing: -1.1px; }
-  .hero-sub { font-size: 18px; }
+  .hero h1 { font-size: 36px; line-height: 40px; letter-spacing: -.9px; }
   .cards { grid-template-columns: minmax(0, 1fr); max-width: 420px; }
   .card-media { height: auto; aspect-ratio: 348 / 335; }
+  .card-media img { top: calc(50% + var(--dy, 0px) + 10px); }
   .f-cols { grid-template-columns: 1fr; }
   .f-col { border-right: 0; }
   .f-col + .f-col { border-top: 1px solid var(--line); }

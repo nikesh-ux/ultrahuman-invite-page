@@ -7,8 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261012-40">
-<script>document.documentElement.classList.add("js"); try { var t = localStorage.getItem("uh-theme"); if (/^v[1-6]$/.test(t)) document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+<link rel="stylesheet" href="styles.css?v=20261012-68">
+<script>document.documentElement.classList.add("js"); try { localStorage.removeItem("uh-theme"); } catch (e) {}</script>
 </head>
 <body>
 
@@ -67,14 +67,20 @@
   <div class="grain" aria-hidden="true"></div>
   <div class="hero-inner">
     <h1>You are invited by<br>Dave Dillon</h1>
-    <p class="hero-sub">&ldquo;Get 10% off using code &ldquo;<button type="button" class="code" data-code="Chase10" title="Click to copy" aria-label="Copy promo code Chase10">Chase10</button>&rdquo; at checkout&rdquo;</p>
   </div>
 </section>
 
 <section class="rings" aria-label="Choose your ring">
-  <div class="cards">
-    <article class="card">
-      <a class="card-media" href="#" aria-label="Ultrahuman Ring PRO"><img alt="Ultrahuman Ring PRO" src="assets/ring-pro.png" style="--dy:-2.16px"></a>
+  <div class="switch" role="group" aria-label="Choose a ring">
+    <button type="button" class="is-on" data-product="pro" aria-pressed="true">Ring PRO</button>
+    <button type="button" data-product="air" aria-pressed="false">Ring AIR</button>
+  </div>
+  <div class="cards" data-active="pro">
+    <article class="card" data-p="pro">
+      <div class="media-wrap">
+        <a class="card-media" href="#" aria-label="Ultrahuman Ring PRO"><img alt="Ultrahuman Ring PRO" src="assets/ring-pro.png" style="--dy:-2.16px"></a>
+        <button type="button" class="card-code" data-code="Chase10" aria-label="Copy promo code Chase10"><strong class="cc-code">Chase10</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+      </div>
       <div class="card-body">
         <div class="card-text">
           <h2>Ultrahuman Ring PRO</h2>
@@ -88,8 +94,11 @@
       <span class="badge">10% off</span>
     </article>
 
-    <article class="card">
-      <a class="card-media" href="#" aria-label="Ultrahuman Ring AIR"><img alt="Ultrahuman Ring AIR" src="assets/ring-air.png" style="--dy:1.84px"></a>
+    <article class="card" data-p="air">
+      <div class="media-wrap">
+        <a class="card-media" href="#" aria-label="Ultrahuman Ring AIR"><img alt="Ultrahuman Ring AIR" src="assets/ring-air.png" style="--dy:1.84px"></a>
+        <button type="button" class="card-code" data-code="Chase32" aria-label="Copy promo code Chase32"><strong class="cc-code">Chase32</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+      </div>
       <div class="card-body">
         <div class="card-text">
           <h2>Ultrahuman Ring AIR</h2>
@@ -258,14 +267,6 @@
   </div>
 </footer>
 
-<nav class="versions" aria-label="Gradient colour version">
-  <button type="button" data-theme="v1" aria-pressed="true">v1</button>
-  <button type="button" data-theme="v2" aria-pressed="false">v2</button>
-  <button type="button" data-theme="v3" aria-pressed="false">v3</button>
-  <button type="button" data-theme="v4" aria-pressed="false">v4</button>
-  <button type="button" data-theme="v5" aria-pressed="false">v5</button>
-  <button type="button" data-theme="v6" aria-pressed="false">v6</button>
-</nav>
 
 <script>
   // Cards ease in the first time they scroll into view.
@@ -282,40 +283,40 @@
     cards.forEach(function (c, i) { c.style.setProperty('--d', (350 + (i % 2) * 140) + 'ms'); io.observe(c); });
   })();
 
-  // Version tabs: swap the gradient colour set (CSS variables only).
+  // Phones show one product at a time; the toggle swaps which card is visible (PRO is the default).
   (function () {
-    var root = document.documentElement, tabs = document.querySelectorAll('.versions button');
-    function set(v, save) {
-      root.setAttribute('data-theme', v);
-      tabs.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-theme') === v)); });
-      if (save) { try { localStorage.setItem('uh-theme', v); } catch (e) {} }
-    }
-    set(root.getAttribute('data-theme') || 'v1', false);
-    tabs.forEach(function (b) { b.addEventListener('click', function () { set(b.getAttribute('data-theme'), true); }); });
+    var cards = document.querySelector('.cards'), btns = document.querySelectorAll('.switch button');
+    if (!cards || !btns.length) return;
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var key = b.getAttribute('data-product');
+        if (cards.getAttribute('data-active') === key) return;
+        cards.setAttribute('data-active', key);
+        btns.forEach(function (x) { var on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+        var card = cards.querySelector('.card[data-p="' + key + '"]');
+        card.style.setProperty('--d', '0ms');
+        card.classList.remove('in'); void card.offsetWidth;
+        setTimeout(function () { card.classList.add('in'); }, 30);
+      });
+    });
   })();
 
-  // Click the promo code to copy it.
+  // Promo-code chips on the product tiles (phones): tap to copy that product's code.
   (function () {
-    var btn = document.querySelector('.code');
-    if (!btn) return;
-    var timer;
-    function done() {
-      btn.setAttribute('data-copied', '');
-      clearTimeout(timer);
-      timer = setTimeout(function () { btn.removeAttribute('data-copied'); }, 1700);
-    }
-    function fallback(text) {
-      var t = document.createElement('textarea');
-      t.value = text; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
-      document.body.appendChild(t); t.select();
-      try { document.execCommand('copy'); done(); } catch (e) {}
-      document.body.removeChild(t);
-    }
-    btn.addEventListener('click', function () {
-      var text = btn.getAttribute('data-code');
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, function () { fallback(text); });
-      } else { fallback(text); }
+    document.querySelectorAll('.card-code').forEach(function (btn) {
+      var timer;
+      function done() { btn.setAttribute('data-copied', ''); clearTimeout(timer); timer = setTimeout(function () { btn.removeAttribute('data-copied'); }, 1700); }
+      function fallback(text) {
+        var t = document.createElement('textarea');
+        t.value = text; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+        document.body.appendChild(t); t.select();
+        try { document.execCommand('copy'); done(); } catch (e) {}
+        document.body.removeChild(t);
+      }
+      btn.addEventListener('click', function () {
+        var text = btn.getAttribute('data-code');
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, function () { fallback(text); }); } else { fallback(text); }
+      });
     });
   })();
 
