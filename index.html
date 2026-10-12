@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261012-198">
+<link rel="stylesheet" href="styles.css?v=20261012-199">
 <script>document.documentElement.classList.add("js"); try { localStorage.removeItem("uh-layout"); localStorage.removeItem("uh-rings"); var t = localStorage.getItem("uh-theme"); if (/^v(1|4)$/.test(t)) document.documentElement.setAttribute("data-theme", t); } catch (e) {} (function () { var m = matchMedia("(max-width: 760px)"), r = document.documentElement; function set() { r.setAttribute("data-layout", m.matches ? "a" : "b"); } set(); if (m.addEventListener) m.addEventListener("change", set); else m.addListener(set); })();</script>
 </head>
 <body>
@@ -412,6 +412,27 @@
     cards.addEventListener('scroll', sync, { passive: true });
     dots.forEach(function (d, i) { d.addEventListener('click', function () { cards.scrollTo({ left: cards.scrollLeft + pos(items[i]), behavior: 'smooth' }); }); });
     sync();
+  })();
+
+  // Lifestyle carousel: eases to a stop on hover and eases back up to speed on leave, instead of freezing and jumping.
+  (function () {
+    var m = document.querySelector('.marquee');
+    if (!m || !m.animate || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    m.style.animation = 'none';
+    var a = m.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-50%)' }], { duration: 70000, iterations: Infinity, easing: 'linear' });
+    var raf = 0;
+    function ease(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+    function to(target, ms) {
+      cancelAnimationFrame(raf);
+      var from = a.playbackRate, t0 = performance.now();
+      (function step(now) {
+        var p = Math.min(1, (now - t0) / ms);
+        a.playbackRate = from + (target - from) * ease(p);
+        if (p < 1) raf = requestAnimationFrame(step);
+      })(t0);
+    }
+    m.addEventListener('mouseenter', function () { to(0, 900); });
+    m.addEventListener('mouseleave', function () { to(1, 1100); });
   })();
 
   // Gradient colour versions: v1 blue, v2 gold (data-theme v4); v2 also carries the "Top Picks" heading.
