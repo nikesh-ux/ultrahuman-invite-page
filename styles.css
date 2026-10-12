@@ -147,15 +147,15 @@ html[data-theme="v4"] .hero-inner { padding-top: 154px; }
 .hero-sub .code[data-copied]::after { opacity: 1; transform: translate(-50%, 0); }
 
 /* Film grain: one overlay-blended noise layer for the gradient, one faint speckle layer for the dark areas. */
-.grain, .grain::after { position: absolute; inset: 0; pointer-events: none; background-size: 240px 240px; }
+.grain, .grain::after { position: absolute; inset: 0; pointer-events: none; background-size: 220px 220px; }
 .grain {
-  background-image: url("assets/grain.png");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   mix-blend-mode: overlay; opacity: .75;
   -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 62%, transparent 92%); mask-image: linear-gradient(to bottom, #000 0, #000 62%, transparent 92%);
 }
 .grain::after {
   content: ""; mix-blend-mode: normal; opacity: .1;
-  background-image: url("assets/speck.png");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.6 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @property --r { syntax: '<length>'; inherits: false; initial-value: 0px; }
@@ -276,11 +276,14 @@ html[data-theme="v4"] .hero-inner { padding-top: 154px; }
 .js .card .card-media img { scale: 1.07; }
 .js .card.in { opacity: 1; transform: none; transition: opacity .45s ease-out var(--d, 0ms), transform .6s cubic-bezier(.16, 1, .3, 1) var(--d, 0ms); }
 .js .card.in .card-media img { scale: 1; transition: scale .9s cubic-bezier(.16, 1, .3, 1) var(--d, 0ms); }
+/* The heading row above each ring card (phones) rises in together with its card. */
+.js .intro { opacity: 0; transform: translateY(28px) scale(.98); }
+.js .intro.in { opacity: 1; transform: none; transition: opacity .45s ease-out var(--d, 0ms), transform .6s cubic-bezier(.16, 1, .3, 1) var(--d, 0ms); }
 /* Other products (Home, M1, Blood Vision) are always in place: no entrance animation. */
 .js .pgroup:last-child .card, .js .pgroup:last-child .card.in { opacity: 1; transform: none; transition: none; }
 .js .pgroup:last-child .card .card-media img, .js .pgroup:last-child .card.in .card-media img { scale: 1; transition: none; }
 @media (prefers-reduced-motion: reduce) {
-  .js .card, .js .card .card-media img { opacity: 1; transform: none; scale: 1; transition: none; }
+  .js .card, .js .intro, .js .card .card-media img { opacity: 1; transform: none; scale: 1; transition: none; }
 }
 
 /* Carousel dots: phones only. */

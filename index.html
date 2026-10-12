@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261012-196">
+<link rel="stylesheet" href="styles.css?v=20261012-198">
 <script>document.documentElement.classList.add("js"); try { localStorage.removeItem("uh-layout"); localStorage.removeItem("uh-rings"); var t = localStorage.getItem("uh-theme"); if (/^v(1|4)$/.test(t)) document.documentElement.setAttribute("data-theme", t); } catch (e) {} (function () { var m = matchMedia("(max-width: 760px)"), r = document.documentElement; function set() { r.setAttribute("data-layout", m.matches ? "a" : "b"); } set(); if (m.addEventListener) m.addEventListener("change", set); else m.addListener(set); })();</script>
 </head>
 <body>
@@ -348,7 +348,7 @@
   // Cards ease in the first time they scroll into view.
   (function () {
     var cards = document.querySelectorAll('.card');
-    if (!('IntersectionObserver' in window)) { cards.forEach(function (c) { c.classList.add('in'); }); return; }
+    if (!('IntersectionObserver' in window)) { document.querySelectorAll('.card, .intro').forEach(function (c) { c.classList.add('in'); }); return; }
     var onLoad = true;
     setTimeout(function () { onLoad = false; }, 700);
     var io = new IntersectionObserver(function (entries) {
@@ -357,6 +357,8 @@
         // Cards that scroll into view later start almost at once (tiny stagger); only the landing view waits a beat.
         if (!onLoad) e.target.style.setProperty('--d', (Number(e.target.getAttribute('data-i')) * 60) + 'ms');
         e.target.classList.add('in');
+        var intro = e.target.previousElementSibling;
+        if (intro && intro.classList.contains('intro')) { intro.style.setProperty('--d', e.target.style.getPropertyValue('--d')); intro.classList.add('in'); }
         io.unobserve(e.target);
       });
     }, { threshold: 0, rootMargin: '0px 0px 18% 0px' });
