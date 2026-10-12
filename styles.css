@@ -21,7 +21,6 @@
 @property --warm { syntax: "<color>"; inherits: true; initial-value: #f0cdc3; }
 :root, :root[data-theme="v1"] { --g1: #00304f; --g2: #2f6f9c; --g3: #8fd0e0; --g4: #cdf0ef; --g5: #e9f9f5; --glow: #e8fbf7; --warm: #f0cdc3; }
 /* PLACEHOLDERS for v2-v6 until the real colours are supplied: replace the seven values in each block. */
-:root[data-theme="v2"] { --g1: #07071a; --g2: #1c1c72; --g3: #5b4a9a; --g4: #a07fb8; --g5: #dccbe8; --glow: #e6d6ee; --warm: #8a6aa6; }
 :root[data-theme="v3"] { --g1: #05382f; --g2: #1f8a6e; --g3: #7fd6b8; --g4: #d3f3e4; --g5: #effaf3; --glow: #eefaf1; --warm: #f2dfb0; }
 :root[data-theme="v4"] { --g1: #3d2a0b; --g2: #a9791f; --g3: #d4a84a; --g4: #ecd29a; --g5: #faf0d8; --glow: #fbf1d8; --warm: #e2c080; }
 :root[data-theme="v5"] { --g1: #4a0a22; --g2: #c2235a; --g3: #f27aa0; --g4: #fcc9d8; --g5: #fff0f4; --glow: #fff0f3; --warm: #ffd2a8; }
@@ -93,6 +92,13 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 117px 16px 0; text-align: center; color: #fff; }
 /* Silver highlight clipped to the icon shape; each one rides in with the gradient pass it belongs to. */
 .hero h1 .nb { white-space: nowrap; }
+/* Heading copy per colour version: v1 "You are invited by…", v2 (gold) "Dave Dillon’s Top Picks". */
+.hero h1 .h-b { display: none; }
+html[data-theme="v4"] .hero h1 .h-a { display: none; }
+html[data-theme="v4"] .hero h1 .h-b { display: inline; }
+/* The v2 heading is one line against two in v1, so nudge it down by half the difference to keep it centred between the header and the cards. */
+html[data-theme="v4"] .hero h1 { text-wrap: balance; }
+html[data-theme="v4"] .hero-inner { padding-top: 154px; }
 .hero h1 { font-size: 72px; font-weight: 500; line-height: 75px; letter-spacing: -3px; }
 .hero-sub { font-size: 24px; line-height: normal; margin-top: 11px; }
 /* Sweeping gradient: slides in from the right on load, then loops out and back in.
@@ -177,8 +183,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .switch, .rail { display: none; }
 .media-wrap { display: block; position: relative; }
 .cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 24px; max-width: 1176px; margin: 0 auto -24px; padding: 0 16px; box-sizing: content-box; }
-.pgroup + .pgroup { margin-top: 24px; }
 .cards > .card { width: 364px; margin-bottom: 24px; }
+
+/* Heading above the other-products group. */
+.group-title { margin: 0 0 48px; text-align: center; font-size: 28px; font-weight: 500; line-height: 32px; letter-spacing: -.84px; color: #111; pointer-events: auto; }
+.pgroup + .pgroup { margin-top: 72px; }
 .card {
   position: relative; display: flex; flex-direction: column; padding: 8px; overflow: hidden;
   background: rgba(245, 245, 245, .2); border-radius: 16px; box-shadow: 0 24px 52px -32px rgba(0, 0, 0, .3);
@@ -196,7 +205,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .card-media.is-photo { background: #e0e0e0; }
 .card-media.is-white img { mix-blend-mode: multiply; }
 .card-media img { position: absolute; left: calc(50% + 3px); top: calc(50% + var(--dy, 0px)); width: 102%; height: 131.55%; max-width: none; transform: translate(-50%, -50%); object-fit: cover; }
-.card-body { display: flex; flex: 1; flex-direction: column; justify-content: space-between; gap: 12px; padding: 16px 8px 14px; }
+.card-body { display: flex; flex: 1; flex-direction: column; justify-content: space-between; gap: 12px; padding: 16px 8px 8px; }
 .card h2 { font-size: 16px; font-weight: 500; line-height: 17.6px; letter-spacing: -.48px; }
 .card-text p { padding: 4px 0 16px; min-height: 48px; font-size: 12px; line-height: 15.6px; letter-spacing: -.42px; color: var(--ink-70); }
 .card-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; }
@@ -205,15 +214,40 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .price s { flex-basis: 100%; font-size: 14px; line-height: 18px; color: var(--ink-50); }
 .price strong { font-size: 16px; font-weight: 500; line-height: 22px; }
 .price span { font-size: 14px; line-height: 22px; color: rgba(0, 0, 0, .55); }
-.price-meta { display: flex; align-items: center; margin-top: 6px; }
+.price-meta { display: flex; align-items: center; min-height: 32px; margin-top: 8px; }
 /* Promo code beside the tax note: plain grey underlined text with the copy icon, no chip. */
 .card-code.in-price {
-  position: static; height: auto; padding: 0; gap: 5px; background: none; border-radius: 0; font-size: 14px; line-height: 22px; letter-spacing: -.3px; font-weight: 500; color: var(--blue);
+  position: static; height: auto; padding: 3px 5px; gap: 5px; background: rgba(17, 43, 175, .08); border-radius: 5px; font-size: 16px; line-height: 22px; letter-spacing: -.3px; font-weight: 500; color: var(--blue);
   -webkit-backdrop-filter: none; backdrop-filter: none;
 }
-.card-code.in-price .cc-code { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-skip-ink: none; }
-.card-code.in-price:hover { color: #2145db; background: none; }
-.card-code.in-price[data-copied] { background: none; padding-right: 0; }
+.card-code.in-price .cc-code { text-decoration: none; }
+/* The chip text takes the chip's own size; the shared price rules (.price strong / .price span) would otherwise make it bigger on phones. */
+.card-code.in-price .cc-code, .card-code.in-price .cc-done { font-size: inherit; line-height: inherit; color: inherit; font-weight: 500; }
+.card-code.in-price:hover { color: var(--blue); background: rgba(17, 43, 175, .14); }
+.card-code.in-price[data-copied] { background: rgba(0, 0, 0, .08); color: rgba(0, 0, 0, .55); padding-right: 5px; }
+/* Copy feedback: the chip pops, a shimmer sweeps across the blue, then it settles to grey. */
+.card-code.in-price, html[data-layout="a"] .intro .card-code.in-intro { position: relative; top: auto; right: auto; overflow: hidden; }
+.card-code.in-price, html[data-layout="a"] .intro .card-code.in-intro { transition: background-color .6s cubic-bezier(.4, 0, .2, 1), color .6s cubic-bezier(.4, 0, .2, 1), transform .15s cubic-bezier(.32, .08, .24, 1); }
+/* The "Copied" label crossfades over the code in place, so the chip never changes width. */
+.cc-done { display: none; }
+.card-code.in-price .cc-done, html[data-layout="a"] .intro .card-code.in-intro .cc-done { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .25s ease; }
+.card-code.in-price .cc-code, .card-code.in-price .cc-ico, html[data-layout="a"] .intro .card-code.in-intro .cc-code, html[data-layout="a"] .intro .card-code.in-intro .cc-ico { transition: opacity .25s ease; }
+.card-code.in-price[data-copied] .cc-ico, html[data-layout="a"] .intro .card-code.in-intro[data-copied] .cc-ico { display: inline-block; }
+.card-code.in-price[data-copied] .cc-code::after, html[data-layout="a"] .intro .card-code.in-intro[data-copied] .cc-code::after { content: none; }
+.card-code.in-price[data-copied] .cc-code, .card-code.in-price[data-copied] .cc-ico, html[data-layout="a"] .intro .card-code.in-intro[data-copied] .cc-code, html[data-layout="a"] .intro .card-code.in-intro[data-copied] .cc-ico { opacity: 0; }
+.card-code.in-price[data-copied] .cc-done, html[data-layout="a"] .intro .card-code.in-intro[data-copied] .cc-done { opacity: 1; }
+/* Hold the code visible through the pop and shimmer; swap to the label as it turns grey. */
+.card-code.in-price[data-copied] .cc-code, .card-code.in-price[data-copied] .cc-ico, .card-code.in-price[data-copied] .cc-done, html[data-layout="a"] .intro .card-code.in-intro[data-copied] .cc-code, html[data-layout="a"] .intro .card-code.in-intro[data-copied] .cc-ico, html[data-layout="a"] .intro .card-code.in-intro[data-copied] .cc-done { transition-delay: .8s; transition-duration: .3s; }
+.card-code.in-price::after, html[data-layout="a"] .intro .card-code.in-intro::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: linear-gradient(100deg, transparent 28%, rgba(255, 255, 255, .85) 50%, transparent 72%); transform: translateX(-110%);
+}
+.card-code.in-price[data-copied], html[data-layout="a"] .intro .card-code.in-intro[data-copied] { animation: cc-pop .6s cubic-bezier(.3, 1.4, .5, 1), cc-grey .4s ease .75s backwards; }
+.card-code.in-price[data-copied]::after, html[data-layout="a"] .intro .card-code.in-intro[data-copied]::after { animation: cc-shimmer .75s ease-in-out .05s; }
+@keyframes cc-pop { 0% { transform: scale(1); } 35% { transform: scale(1.025); } 100% { transform: scale(1); } }
+@keyframes cc-shimmer { 0% { opacity: 1; transform: translateX(-110%); } 100% { opacity: 1; transform: translateX(110%); } }
+@keyframes cc-grey { from { background: rgba(17, 43, 175, .14); color: var(--blue); } to { background: rgba(0, 0, 0, .08); color: rgba(0, 0, 0, .55); } }
+@media (prefers-reduced-motion: reduce) { .card-code[data-copied], .card-code[data-copied]::after { animation: none !important; } }
 .badge {
   position: absolute; top: 16px; right: 16px; display: flex; align-items: center; height: 28px; padding: 0 16px;
   background: rgba(245, 245, 245, .8); border-radius: 48px;
@@ -238,8 +272,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* Micro entrance: cards rise and fade in, with the photo settling from a slight zoom. */
 .js .card { opacity: 0; transform: translateY(28px) scale(.98); }
 .js .card .card-media img { scale: 1.07; }
-.js .card.in { opacity: 1; transform: none; transition: opacity .7s ease-out var(--d, 0ms), transform .9s cubic-bezier(.16, 1, .3, 1) var(--d, 0ms); }
-.js .card.in .card-media img { scale: 1; transition: scale 1.3s cubic-bezier(.16, 1, .3, 1) var(--d, 0ms); }
+.js .card.in { opacity: 1; transform: none; transition: opacity .45s ease-out var(--d, 0ms), transform .6s cubic-bezier(.16, 1, .3, 1) var(--d, 0ms); }
+.js .card.in .card-media img { scale: 1; transition: scale .9s cubic-bezier(.16, 1, .3, 1) var(--d, 0ms); }
+/* Other products (Home, M1, Blood Vision) are always in place: no entrance animation. */
+.js .pgroup:last-child .card, .js .pgroup:last-child .card.in { opacity: 1; transform: none; transition: none; }
+.js .pgroup:last-child .card .card-media img, .js .pgroup:last-child .card.in .card-media img { scale: 1; transition: none; }
 @media (prefers-reduced-motion: reduce) {
   .js .card, .js .card .card-media img { opacity: 1; transform: none; scale: 1; transition: none; }
 }
@@ -361,12 +398,12 @@ button.chip { padding: 4px 6px 4px 4px; }
   html[data-layout="a"] .card ~ .intro { margin-top: 60px; }
   /* Heading-row code: no fill, just the underlined code with its copy icon. In this layout the gradient only covers the main heading and fades out before the first row, so the rows sit on the light page. */
   html[data-layout="a"] .intro .card-code.in-intro {
-    height: auto; padding: 0; gap: 7px; background: none; border-radius: 0; font-size: 14px; letter-spacing: -.28px; line-height: 20px; color: var(--blue);
+    height: auto; padding: 3px 5px; gap: 5px; background: rgba(17, 43, 175, .08); border-radius: 5px; font-size: 16px; letter-spacing: -.3px; line-height: 22px; color: var(--blue);
     -webkit-backdrop-filter: none; backdrop-filter: none;
   }
-  html[data-layout="a"] .intro .card-code.in-intro .cc-code { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-skip-ink: none; }
-  html[data-layout="a"] .intro .card-code.in-intro:hover { opacity: .8; background: none; }
-  html[data-layout="a"] .intro .card-code.in-intro[data-copied] { background: none; padding-right: 0; }
+  html[data-layout="a"] .intro .card-code.in-intro .cc-code { text-decoration: none; }
+  html[data-layout="a"] .intro .card-code.in-intro:hover { background: rgba(17, 43, 175, .14); }
+  html[data-layout="a"] .intro .card-code.in-intro[data-copied] { background: rgba(0, 0, 0, .08); color: rgba(0, 0, 0, .55); padding-right: 5px; }
   html[data-layout="a"] .price-meta { display: none; }
   /* v2 keeps the code in the heading row, so the price block goes back to price on top and "Tax incl." below, with the button on the right. */
   html[data-layout="a"] .card-foot { display: flex; justify-content: space-between; align-items: center; }
@@ -377,9 +414,10 @@ button.chip { padding: 4px 6px 4px 4px; }
   html[data-layout="a"] .price-row strong { line-height: 16px; }
   html[data-layout="a"] .price-row span { flex-basis: 100%; margin-top: 0; line-height: 24px; }
   html[data-layout="a"] .card-media { aspect-ratio: 348 / 335; }
-  html[data-layout="a"] .hero { height: 340px; -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 130px), rgba(0,0,0,0.999) calc(100% - 123.5px), rgba(0,0,0,0.991) calc(100% - 117.0px), rgba(0,0,0,0.973) calc(100% - 110.5px), rgba(0,0,0,0.942) calc(100% - 104.0px), rgba(0,0,0,0.896) calc(100% - 97.5px), rgba(0,0,0,0.837) calc(100% - 91.0px), rgba(0,0,0,0.765) calc(100% - 84.5px), rgba(0,0,0,0.683) calc(100% - 78.0px), rgba(0,0,0,0.593) calc(100% - 71.5px), rgba(0,0,0,0.500) calc(100% - 65.0px), rgba(0,0,0,0.407) calc(100% - 58.5px), rgba(0,0,0,0.317) calc(100% - 52.0px), rgba(0,0,0,0.235) calc(100% - 45.5px), rgba(0,0,0,0.163) calc(100% - 39.0px), rgba(0,0,0,0.104) calc(100% - 32.5px), rgba(0,0,0,0.058) calc(100% - 26.0px), rgba(0,0,0,0.027) calc(100% - 19.5px), rgba(0,0,0,0.009) calc(100% - 13.0px), rgba(0,0,0,0.001) calc(100% - 6.5px), rgba(0,0,0,0.000) calc(100% - 0.0px)); mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 130px), rgba(0,0,0,0.999) calc(100% - 123.5px), rgba(0,0,0,0.991) calc(100% - 117.0px), rgba(0,0,0,0.973) calc(100% - 110.5px), rgba(0,0,0,0.942) calc(100% - 104.0px), rgba(0,0,0,0.896) calc(100% - 97.5px), rgba(0,0,0,0.837) calc(100% - 91.0px), rgba(0,0,0,0.765) calc(100% - 84.5px), rgba(0,0,0,0.683) calc(100% - 78.0px), rgba(0,0,0,0.593) calc(100% - 71.5px), rgba(0,0,0,0.500) calc(100% - 65.0px), rgba(0,0,0,0.407) calc(100% - 58.5px), rgba(0,0,0,0.317) calc(100% - 52.0px), rgba(0,0,0,0.235) calc(100% - 45.5px), rgba(0,0,0,0.163) calc(100% - 39.0px), rgba(0,0,0,0.104) calc(100% - 32.5px), rgba(0,0,0,0.058) calc(100% - 26.0px), rgba(0,0,0,0.027) calc(100% - 19.5px), rgba(0,0,0,0.009) calc(100% - 13.0px), rgba(0,0,0,0.001) calc(100% - 6.5px), rgba(0,0,0,0.000) calc(100% - 0.0px)); }
-  html[data-layout="a"] .hero-inner { padding-top: 16px; }
-  html[data-layout="a"] .rings { margin-top: -67px; padding-bottom: 64px; background: none; }
+  html[data-layout="a"] .hero { height: 390px; -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 160px), rgba(0,0,0,1.000) calc(100% - 154.7px), rgba(0,0,0,0.997) calc(100% - 149.3px), rgba(0,0,0,0.991) calc(100% - 144.0px), rgba(0,0,0,0.981) calc(100% - 138.7px), rgba(0,0,0,0.965) calc(100% - 133.3px), rgba(0,0,0,0.942) calc(100% - 128.0px), rgba(0,0,0,0.913) calc(100% - 122.7px), rgba(0,0,0,0.878) calc(100% - 117.3px), rgba(0,0,0,0.837) calc(100% - 112.0px), rgba(0,0,0,0.790) calc(100% - 106.7px), rgba(0,0,0,0.738) calc(100% - 101.3px), rgba(0,0,0,0.683) calc(100% - 96.0px), rgba(0,0,0,0.624) calc(100% - 90.7px), rgba(0,0,0,0.562) calc(100% - 85.3px), rgba(0,0,0,0.500) calc(100% - 80.0px), rgba(0,0,0,0.438) calc(100% - 74.7px), rgba(0,0,0,0.376) calc(100% - 69.3px), rgba(0,0,0,0.317) calc(100% - 64.0px), rgba(0,0,0,0.262) calc(100% - 58.7px), rgba(0,0,0,0.210) calc(100% - 53.3px), rgba(0,0,0,0.163) calc(100% - 48.0px), rgba(0,0,0,0.122) calc(100% - 42.7px), rgba(0,0,0,0.087) calc(100% - 37.3px), rgba(0,0,0,0.058) calc(100% - 32.0px), rgba(0,0,0,0.035) calc(100% - 26.7px), rgba(0,0,0,0.019) calc(100% - 21.3px), rgba(0,0,0,0.009) calc(100% - 16.0px), rgba(0,0,0,0.003) calc(100% - 10.7px), rgba(0,0,0,0.000) calc(100% - 5.3px), rgba(0,0,0,0.000) calc(100% - 0.0px)); mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 160px), rgba(0,0,0,1.000) calc(100% - 154.7px), rgba(0,0,0,0.997) calc(100% - 149.3px), rgba(0,0,0,0.991) calc(100% - 144.0px), rgba(0,0,0,0.981) calc(100% - 138.7px), rgba(0,0,0,0.965) calc(100% - 133.3px), rgba(0,0,0,0.942) calc(100% - 128.0px), rgba(0,0,0,0.913) calc(100% - 122.7px), rgba(0,0,0,0.878) calc(100% - 117.3px), rgba(0,0,0,0.837) calc(100% - 112.0px), rgba(0,0,0,0.790) calc(100% - 106.7px), rgba(0,0,0,0.738) calc(100% - 101.3px), rgba(0,0,0,0.683) calc(100% - 96.0px), rgba(0,0,0,0.624) calc(100% - 90.7px), rgba(0,0,0,0.562) calc(100% - 85.3px), rgba(0,0,0,0.500) calc(100% - 80.0px), rgba(0,0,0,0.438) calc(100% - 74.7px), rgba(0,0,0,0.376) calc(100% - 69.3px), rgba(0,0,0,0.317) calc(100% - 64.0px), rgba(0,0,0,0.262) calc(100% - 58.7px), rgba(0,0,0,0.210) calc(100% - 53.3px), rgba(0,0,0,0.163) calc(100% - 48.0px), rgba(0,0,0,0.122) calc(100% - 42.7px), rgba(0,0,0,0.087) calc(100% - 37.3px), rgba(0,0,0,0.058) calc(100% - 32.0px), rgba(0,0,0,0.035) calc(100% - 26.7px), rgba(0,0,0,0.019) calc(100% - 21.3px), rgba(0,0,0,0.009) calc(100% - 16.0px), rgba(0,0,0,0.003) calc(100% - 10.7px), rgba(0,0,0,0.000) calc(100% - 5.3px), rgba(0,0,0,0.000) calc(100% - 0.0px)); }
+  html[data-layout="a"] .hero-inner { padding-top: 70px; }
+  html[data-theme="v4"][data-layout="a"] .hero-inner { padding-top: 88px; }
+  html[data-layout="a"] .rings { margin-top: -16px; padding-bottom: 64px; background: none; }
   html[data-layout="a"] .gallery { padding-top: 56px; }
   /* Wider gradient layer on phones so the hero only ever sees its soft middle, never the faded edge. */
   .aurora { left: -60%; right: -60%; }
@@ -394,6 +432,27 @@ button.chip { padding: 4px 6px 4px 4px; }
   .card-foot .price-meta { grid-column: 1; margin-top: 0; }
   .card-foot .pill-blue { grid-column: 2; grid-row: 2; }
   .pgroup + .pgroup { margin-top: 44px; }
+  /* Phones: smaller code chips so longer codes still fit beside Buy now. */
+  .card-code.in-price, html[data-layout="a"] .intro .card-code.in-intro { padding: 3px 7px; gap: 5px; border-radius: 5px; font-size: 14.5px; line-height: 21px; letter-spacing: -.25px; }
+  .card-code.in-price .cc-ico, html[data-layout="a"] .intro .card-code.in-intro .cc-ico { width: 13px; height: 13px; }
+  /* Same height as Buy now so the two line up edge to edge. */
+  .card-code.in-price { height: 32px; padding: 0 9px; }
+  .card-code.in-price .cc-code { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .group-title { margin-bottom: 18px; font-size: 22px; line-height: 26px; letter-spacing: -.55px; }
+  /* Phones (v2): rings stay as heading rows; "Other products" is one heading over a swipeable row of cards. Each card carries its own code chip beside Buy now. The next card peeks in from the right. */
+  html[data-layout="a"] .pgroup:last-child .intro { display: none; }
+  html[data-layout="a"] .pgroup:last-child .cards { display: grid; justify-content: start; grid-auto-flow: column; grid-template-columns: none; grid-template-rows: auto; grid-auto-columns: 89%; column-gap: 12px; max-width: none; margin: 0 0 -24px; padding: 0 16px 48px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  html[data-layout="a"] .pgroup:last-child .cards::-webkit-scrollbar { display: none; }
+  html[data-layout="a"] .pgroup:last-child .cards > .card { scroll-snap-align: start; }
+  html[data-layout="a"] .group-title { margin-bottom: 36px; }
+  html[data-layout="a"] .pgroup:last-child .price-meta { display: flex; margin-top: 0; }
+  html[data-layout="a"] .pgroup:last-child .card-foot { display: grid; grid-template-columns: 1fr auto; align-items: end; column-gap: 12px; row-gap: 12px; }
+  html[data-layout="a"] .pgroup:last-child .card-foot .price { display: contents; }
+  html[data-layout="a"] .pgroup:last-child .card-foot .price-row { grid-column: 1 / -1; flex-wrap: wrap; align-items: baseline; column-gap: 6px; margin-bottom: 0; }
+  html[data-layout="a"] .pgroup:last-child .price-row strong { line-height: 22px; }
+  html[data-layout="a"] .pgroup:last-child .price-row span { flex-basis: auto; margin-top: 0; line-height: 22px; }
+  html[data-layout="a"] .pgroup:last-child .card-foot .price-meta { grid-column: 1; }
+  html[data-layout="a"] .pgroup:last-child .card-foot .pill-blue { grid-column: 2; grid-row: 2; }
   .card-media { height: auto; aspect-ratio: 348 / 335; }
   .card-media img { top: calc(50% + var(--dy, 0px) + 10px); }
   .f-cols { grid-template-columns: 1fr; }
@@ -405,18 +464,17 @@ button.chip { padding: 4px 6px 4px 4px; }
   .footer { padding: 0 20px; }
 }
 
-/* ---------- version tab bar ---------- */
+/* ---------- version tab bar (phones only) ---------- */
 .versions {
-  display: none; position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 50;
-  gap: 4px; padding: 5px; border-radius: 999px;
+  display: flex; position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 50; gap: 4px; padding: 5px; border-radius: 999px;
   background: rgba(20, 22, 26, .62); -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3);
   box-shadow: 0 8px 30px rgba(0, 0, 0, .28), inset 0 0 0 1px rgba(255, 255, 255, .12);
 }
 .versions button {
-  min-width: 52px; height: 34px; padding: 0 16px; border-radius: 999px; font-size: 13px; font-weight: 500; letter-spacing: -.1px; line-height: 34px;
+  min-width: 38px; height: 34px; padding: 0 10px; border-radius: 999px; font-size: 13px; font-weight: 500; letter-spacing: -.1px; line-height: 34px;
   color: rgba(255, 255, 255, .72); transition: background .25s ease, color .25s ease;
 }
 .versions button:hover { color: #fff; }
 .versions button[aria-pressed="true"] { background: #fff; color: #111; }
 .versions button:focus-visible { outline: 2px solid rgba(255, 255, 255, .9); outline-offset: 2px; }
-@media (max-width: 760px) { .versions { display: flex; left: 12px; bottom: max(12px, env(safe-area-inset-bottom)); } .versions button { min-width: 38px; padding: 0 10px; } }
+@media (max-width: 760px) { .versions { left: 12px; bottom: max(12px, env(safe-area-inset-bottom)); } }
