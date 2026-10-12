@@ -147,15 +147,15 @@ html[data-theme="v4"] .hero-inner { padding-top: 154px; }
 .hero-sub .code[data-copied]::after { opacity: 1; transform: translate(-50%, 0); }
 
 /* Film grain: one overlay-blended noise layer for the gradient, one faint speckle layer for the dark areas. */
-.grain, .grain::after { position: absolute; inset: 0; pointer-events: none; background-size: 220px 220px; }
+.grain, .grain::after { position: absolute; inset: 0; pointer-events: none; background-size: 240px 240px; }
 .grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("assets/grain.png");
   mix-blend-mode: overlay; opacity: .75;
   -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 62%, transparent 92%); mask-image: linear-gradient(to bottom, #000 0, #000 62%, transparent 92%);
 }
 .grain::after {
   content: ""; mix-blend-mode: normal; opacity: .1;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.6 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("assets/speck.png");
 }
 
 @property --r { syntax: '<length>'; inherits: false; initial-value: 0px; }
@@ -282,6 +282,9 @@ html[data-theme="v4"] .hero-inner { padding-top: 154px; }
 @media (prefers-reduced-motion: reduce) {
   .js .card, .js .card .card-media img { opacity: 1; transform: none; scale: 1; transition: none; }
 }
+
+/* Carousel dots: phones only. */
+.dots { display: none; }
 
 /* ---------- lifestyle carousel (continuous marquee) ---------- */
 .gallery { background: #fff; padding: 96px 0 80px; overflow: hidden; }
@@ -439,11 +442,14 @@ button.chip { padding: 4px 6px 4px 4px; }
   /* Same height as Buy now so the two line up edge to edge. */
   .card-code.in-price { height: 32px; padding: 0 9px; }
   .card-code.in-price .cc-code { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .group-title { margin-bottom: 18px; padding: 0 16px; text-align: left; font-size: 22px; line-height: 26px; letter-spacing: -.55px; }
+    .group-title { margin-bottom: 18px; padding: 0 16px 0 24px; text-align: left; font-size: 22px; line-height: 26px; letter-spacing: -.55px; }
   /* Phones (v2): rings stay as heading rows; "Other products" is one heading over a swipeable row of cards. Each card carries its own code chip beside Buy now. The next card peeks in from the right. */
   html[data-layout="a"] .pgroup:last-child .intro { display: none; }
   html[data-layout="a"] .pgroup:last-child .cards { display: grid; justify-content: start; grid-auto-flow: column; grid-template-columns: none; grid-template-rows: auto; grid-auto-columns: 89%; column-gap: 12px; max-width: none; margin: 0 0 -24px; padding: 0 16px 48px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   html[data-layout="a"] .pgroup:last-child .cards::-webkit-scrollbar { display: none; }
+  html[data-layout="a"] .dots { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 4px; }
+  html[data-layout="a"] .dots button { width: 6px; height: 6px; padding: 0; border-radius: 999px; background: rgba(0, 0, 0, .22); transition: width .3s cubic-bezier(.4, 0, .2, 1), background-color .3s ease; }
+  html[data-layout="a"] .dots button.is-on { width: 18px; background: var(--blue); }
   html[data-layout="a"] .pgroup:last-child .cards > .card { scroll-snap-align: start; }
   html[data-layout="a"] .group-title { margin-bottom: 36px; }
   html[data-layout="a"] .pgroup:last-child .price-meta { display: flex; margin-top: 0; }

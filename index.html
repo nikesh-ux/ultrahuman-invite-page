@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261012-190">
+<link rel="stylesheet" href="styles.css?v=20261012-196">
 <script>document.documentElement.classList.add("js"); try { localStorage.removeItem("uh-layout"); localStorage.removeItem("uh-rings"); var t = localStorage.getItem("uh-theme"); if (/^v(1|4)$/.test(t)) document.documentElement.setAttribute("data-theme", t); } catch (e) {} (function () { var m = matchMedia("(max-width: 760px)"), r = document.documentElement; function set() { r.setAttribute("data-layout", m.matches ? "a" : "b"); } set(); if (m.addEventListener) m.addEventListener("change", set); else m.addListener(set); })();</script>
 </head>
 <body>
@@ -180,6 +180,7 @@
       </div>
     </article>
   </div>
+    <div class="dots" role="tablist" aria-label="Other products"><button type="button" class="is-on" aria-label="Ultrahuman Home"></button><button type="button" aria-label="Ultrahuman M1"></button><button type="button" aria-label="Ultrahuman Blood Vision"></button></div>
     </div>
   </div>
 </section>
@@ -396,6 +397,19 @@
     addEventListener('load', placeAll);
     placeAll();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeAll);
+  })();
+
+  // Other-products carousel (phones): the dots follow the scroll and jump to a card when tapped.
+  (function () {
+    var cards = document.querySelector('.pgroup:last-child .cards'), dots = document.querySelectorAll('.pgroup:last-child .dots button');
+    if (!cards || !dots.length) return;
+    var items = cards.querySelectorAll('.card');
+    function pos(c) { return c.getBoundingClientRect().left - cards.getBoundingClientRect().left - 16; }
+    function current() { var best = 0, bd = 1e9; items.forEach(function (c, i) { var d = Math.abs(pos(c)); if (d < bd) { bd = d; best = i; } }); return best; }
+    function sync() { var n = current(); dots.forEach(function (d, i) { d.classList.toggle('is-on', i === n); d.setAttribute('aria-selected', String(i === n)); }); }
+    cards.addEventListener('scroll', sync, { passive: true });
+    dots.forEach(function (d, i) { d.addEventListener('click', function () { cards.scrollTo({ left: cards.scrollLeft + pos(items[i]), behavior: 'smooth' }); }); });
+    sync();
   })();
 
   // Gradient colour versions: v1 blue, v2 gold (data-theme v4); v2 also carries the "Top Picks" heading.
