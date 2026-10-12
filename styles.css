@@ -173,9 +173,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .rings { pointer-events: none; }
 .rings .cards, .rings .switch { pointer-events: auto; }
 /* Product toggle: phones only. */
-.switch { display: none; }
+.switch, .rail { display: none; }
 .media-wrap { display: block; position: relative; }
-.cards { display: grid; grid-template-columns: repeat(2, 364px); gap: 24px; justify-content: center; max-width: 784px; margin: 0 auto; padding: 0 16px; box-sizing: content-box; }
+.cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 24px; max-width: 1176px; margin: 0 auto -24px; padding: 0 16px; box-sizing: content-box; }
+.pgroup + .pgroup { margin-top: 24px; }
+.cards > .card { width: 364px; margin-bottom: 24px; }
 .card {
   position: relative; display: flex; flex-direction: column; padding: 8px; overflow: hidden;
   background: rgba(245, 245, 245, .2); border-radius: 16px; box-shadow: 0 24px 52px -32px rgba(0, 0, 0, .3);
@@ -189,18 +191,30 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
           mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
 }
 .card-media { position: relative; display: block; height: 335px; border-radius: 12px; overflow: hidden; }
+.card-media.is-photo img { left: 0; top: 0; width: 100%; height: 100%; transform: none; object-fit: cover; }
+.card-media.is-photo { background: #e0e0e0; }
+.card-media.is-white img { mix-blend-mode: multiply; }
 .card-media img { position: absolute; left: calc(50% + 3px); top: calc(50% + var(--dy, 0px)); width: 102%; height: 131.55%; max-width: none; transform: translate(-50%, -50%); object-fit: cover; }
-.card-body { display: flex; flex: 1; flex-direction: column; justify-content: space-between; gap: 12px; padding: 16px 8px 5px; }
+.card-body { display: flex; flex: 1; flex-direction: column; justify-content: space-between; gap: 12px; padding: 16px 8px 14px; }
 .card h2 { font-size: 16px; font-weight: 500; line-height: 17.6px; letter-spacing: -.48px; }
 .card-text p { padding: 4px 0 16px; min-height: 48px; font-size: 12px; line-height: 15.6px; letter-spacing: -.42px; color: var(--ink-70); }
 .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.price { display: flex; flex-direction: column; justify-content: center; height: 41px; letter-spacing: -.42px; white-space: nowrap; }
-.price-row { display: flex; align-items: center; gap: 6px; margin-bottom: -5px; }
-.price s { font-size: 14px; line-height: 24px; color: var(--ink-50); }
-.price strong { font-size: 16px; font-weight: 500; line-height: 16px; }
-.price span { font-size: 14px; line-height: 24px; color: rgba(0, 0, 0, .55); }
+.price { display: flex; flex-direction: column; justify-content: center; min-height: 41px; letter-spacing: -.42px; white-space: nowrap; }
+.price-row { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 6px; row-gap: 0; margin-bottom: 0; }
+.price s { flex-basis: 100%; font-size: 14px; line-height: 18px; color: var(--ink-50); }
+.price strong { font-size: 16px; font-weight: 500; line-height: 22px; }
+.price span { font-size: 14px; line-height: 22px; color: rgba(0, 0, 0, .55); }
+.price-meta { display: flex; align-items: center; margin-top: 6px; }
+/* Promo code beside the tax note: plain grey underlined text with the copy icon, no chip. */
+.card-code.in-price {
+  position: static; height: auto; padding: 0; gap: 5px; background: none; border-radius: 0; font-size: 12px; line-height: 20px; letter-spacing: -.3px; color: rgba(0, 0, 0, .55);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+.card-code.in-price .cc-code { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-skip-ink: none; }
+.card-code.in-price:hover { color: rgba(0, 0, 0, .8); background: none; }
+.card-code.in-price[data-copied] { background: none; padding-right: 0; }
 .badge {
-  position: absolute; top: 16px; left: 16px; display: flex; align-items: center; height: 28px; padding: 0 16px;
+  position: absolute; top: 16px; right: 16px; display: flex; align-items: center; height: 28px; padding: 0 16px;
   background: rgba(245, 245, 245, .8); border-radius: 48px;
   font-size: 12px; font-weight: 500; line-height: 12px; letter-spacing: -.24px; color: var(--blue);
 }
@@ -211,6 +225,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color .15s cubic-bezier(.32, .08, .24, 1), transform .15s cubic-bezier(.32, .08, .24, 1);
 }
 .card-code .cc-label { display: none; }
+.intro { display: none; }
+.card-code.in-intro { position: static; }
 .card-code .cc-code { font-weight: 500; }
 .card-code:hover { background: rgba(255, 255, 255, .95); }
 .card-code:active { transform: scale(.97); }
@@ -310,21 +326,68 @@ button.chip { padding: 4px 6px 4px 4px; }
   .hero-sub { display: none; }
   .rings { margin-top: -597px; padding: 0 0 36px;  background: linear-gradient(to bottom, rgba(238,238,238,0) 591px, #eee 597px); }
   .switch {
-    display: flex; gap: 4px; width: fit-content; margin: 0 auto 26px; padding: 4px; border-radius: 999px; position: relative;
-    background: rgba(255, 255, 255, .2); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .45);
-    -webkit-backdrop-filter: blur(8px) saturate(1.2); backdrop-filter: blur(8px) saturate(1.2);
+    display: flex; gap: 4px; width: fit-content; margin: 0 auto 26px; padding: 5px; border-radius: 999px; position: relative;
+    background: rgba(255, 255, 255, .42); box-shadow: 0 6px 20px rgba(0, 0, 0, .12), inset 0 0 0 1px rgba(255, 255, 255, .65);
+    -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3);
   }
-  .switch button { min-width: 104px; height: 28px; padding: 0 14px; border-radius: 999px; font-size: 13px; letter-spacing: -.104px; color: #fff; transition: background-color .2s cubic-bezier(.32, .08, .24, 1), color .2s cubic-bezier(.32, .08, .24, 1); }
-  .switch button.is-on { background: #fff; color: #111; }
+  .switch { max-width: calc(100% - 32px); overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .switch::-webkit-scrollbar { display: none; }
+  .switch button { flex: none; min-width: 0; height: 36px; padding: 0 18px; border-radius: 999px; font-size: 13px; letter-spacing: -.104px; color: rgba(0, 0, 0, .7); text-shadow: none; transition: background-color .2s cubic-bezier(.32, .08, .24, 1), color .2s cubic-bezier(.32, .08, .24, 1); }
+  .switch button.is-on { background: #fff; color: #111; box-shadow: 0 2px 8px rgba(0, 0, 0, .14); }
+  /* v1: the toggle stays pinned to the top while the product card is on screen. */
+  .switch { position: sticky; top: 12px; z-index: 20; }
+  /* The toggle's sticky range stops 130px short of the card's bottom, so it lets go before it can cover the price and Buy now. */
+  html[data-layout="b"] .pgroup { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 72px auto 130px; }
+  html[data-layout="b"] .pgroup .rail { display: block; grid-column: 1; grid-row: 1 / 3; }
+  html[data-layout="b"] .pgroup .switch { margin: 0 auto; }
+  html[data-layout="b"] .pgroup .cards { grid-column: 1; grid-row: 2 / 4; }
   .cards { row-gap: 0; }
   .gallery { padding-top: 44px; }
   /* Phones: a toggle swaps one product at a time. */
-  .cards[data-active="pro"] [data-p="air"], .cards[data-active="air"] [data-p="pro"] { display: none; }
+  html[data-layout="b"] .cards > .card { display: none; }
+  html[data-layout="b"] .cards[data-active="pro"] > .card[data-p="pro"], html[data-layout="b"] .cards[data-active="air"] > .card[data-p="air"], html[data-layout="b"] .cards[data-active="home"] > .card[data-p="home"], html[data-layout="b"] .cards[data-active="m1"] > .card[data-p="m1"], html[data-layout="b"] .cards[data-active="bv"] > .card[data-p="bv"] { display: flex; }
   .card-media { aspect-ratio: 348 / 315; }
+  /* Phone layout v2: a heading row per product (name left, promo-code chip right) above its card; both products stacked, no toggle. */
+  html[data-layout="a"] .switch { display: none; }
+  html[data-layout="a"] .pgroup + .pgroup { margin-top: 60px; }
+  html[data-layout="a"] .intro { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 4px 16px; color: #111; }
+  html[data-layout="a"] .intro h2 { font-size: 20px; font-weight: 500; line-height: 24px; letter-spacing: -.5px; }
+  html[data-layout="a"] .card ~ .intro { margin-top: 60px; }
+  /* Heading-row code: no fill, just the underlined code with its copy icon. In this layout the gradient only covers the main heading and fades out before the first row, so the rows sit on the light page. */
+  html[data-layout="a"] .intro .card-code.in-intro {
+    height: auto; padding: 0; gap: 7px; background: none; border-radius: 0; font-size: 14px; letter-spacing: -.28px; line-height: 20px; color: rgba(0, 0, 0, .55);
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  html[data-layout="a"] .intro .card-code.in-intro .cc-code { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-skip-ink: none; }
+  html[data-layout="a"] .intro .card-code.in-intro:hover { opacity: .8; background: none; }
+  html[data-layout="a"] .intro .card-code.in-intro[data-copied] { background: none; padding-right: 0; }
+  html[data-layout="a"] .price-meta { display: none; }
+  /* v2 keeps the code in the heading row, so the price block goes back to price on top and "Tax incl." below, with the button on the right. */
+  html[data-layout="a"] .card-foot { display: flex; justify-content: space-between; align-items: center; }
+  html[data-layout="a"] .card-foot .price { display: flex; }
+  html[data-layout="a"] .card-foot .price-row { grid-column: auto; flex-wrap: wrap; }
+  html[data-layout="a"] .price-row { align-items: center; column-gap: 6px; margin-bottom: -5px; }
+  html[data-layout="a"] .price-row s { flex-basis: auto; line-height: 24px; }
+  html[data-layout="a"] .price-row strong { line-height: 16px; }
+  html[data-layout="a"] .price-row span { flex-basis: 100%; margin-top: 0; line-height: 24px; }
+  html[data-layout="a"] .card-media { aspect-ratio: 348 / 335; }
+  html[data-layout="a"] .hero { height: 280px; -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 130px), rgba(0,0,0,0.999) calc(100% - 123.5px), rgba(0,0,0,0.991) calc(100% - 117.0px), rgba(0,0,0,0.973) calc(100% - 110.5px), rgba(0,0,0,0.942) calc(100% - 104.0px), rgba(0,0,0,0.896) calc(100% - 97.5px), rgba(0,0,0,0.837) calc(100% - 91.0px), rgba(0,0,0,0.765) calc(100% - 84.5px), rgba(0,0,0,0.683) calc(100% - 78.0px), rgba(0,0,0,0.593) calc(100% - 71.5px), rgba(0,0,0,0.500) calc(100% - 65.0px), rgba(0,0,0,0.407) calc(100% - 58.5px), rgba(0,0,0,0.317) calc(100% - 52.0px), rgba(0,0,0,0.235) calc(100% - 45.5px), rgba(0,0,0,0.163) calc(100% - 39.0px), rgba(0,0,0,0.104) calc(100% - 32.5px), rgba(0,0,0,0.058) calc(100% - 26.0px), rgba(0,0,0,0.027) calc(100% - 19.5px), rgba(0,0,0,0.009) calc(100% - 13.0px), rgba(0,0,0,0.001) calc(100% - 6.5px), rgba(0,0,0,0.000) calc(100% - 0.0px)); mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 130px), rgba(0,0,0,0.999) calc(100% - 123.5px), rgba(0,0,0,0.991) calc(100% - 117.0px), rgba(0,0,0,0.973) calc(100% - 110.5px), rgba(0,0,0,0.942) calc(100% - 104.0px), rgba(0,0,0,0.896) calc(100% - 97.5px), rgba(0,0,0,0.837) calc(100% - 91.0px), rgba(0,0,0,0.765) calc(100% - 84.5px), rgba(0,0,0,0.683) calc(100% - 78.0px), rgba(0,0,0,0.593) calc(100% - 71.5px), rgba(0,0,0,0.500) calc(100% - 65.0px), rgba(0,0,0,0.407) calc(100% - 58.5px), rgba(0,0,0,0.317) calc(100% - 52.0px), rgba(0,0,0,0.235) calc(100% - 45.5px), rgba(0,0,0,0.163) calc(100% - 39.0px), rgba(0,0,0,0.104) calc(100% - 32.5px), rgba(0,0,0,0.058) calc(100% - 26.0px), rgba(0,0,0,0.027) calc(100% - 19.5px), rgba(0,0,0,0.009) calc(100% - 13.0px), rgba(0,0,0,0.001) calc(100% - 6.5px), rgba(0,0,0,0.000) calc(100% - 0.0px)); }
+  html[data-layout="a"] .hero-inner { padding-top: 16px; }
+  html[data-layout="a"] .rings { margin-top: -35px; padding-bottom: 64px; background: none; }
+  html[data-layout="a"] .gallery { padding-top: 56px; }
   /* Wider gradient layer on phones so the hero only ever sees its soft middle, never the faded edge. */
   .aurora { left: -60%; right: -60%; }
   .hero h1 { font-size: 36px; line-height: 40px; letter-spacing: -.9px; }
-  .cards { grid-template-columns: minmax(0, 1fr); max-width: 420px; }
+  .cards { display: grid; grid-template-columns: minmax(0, 1fr); max-width: 420px; }
+  .cards { margin-bottom: 0; }
+  .cards > .card { width: auto; margin-bottom: 0; }
+  /* Phones: price + tax on the first line; promo code and Buy now share the second line, so nothing is squeezed. */
+  .card-foot { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 12px; row-gap: 12px; }
+  .card-foot .price { display: contents; }
+  .card-foot .price-row { grid-column: 1 / -1; }
+  .card-foot .price-meta { grid-column: 1; margin-top: 0; }
+  .card-foot .pill-blue { grid-column: 2; grid-row: 2; }
+  .pgroup + .pgroup { margin-top: 44px; }
   .card-media { height: auto; aspect-ratio: 348 / 335; }
   .card-media img { top: calc(50% + var(--dy, 0px) + 10px); }
   .f-cols { grid-template-columns: 1fr; }
@@ -338,7 +401,7 @@ button.chip { padding: 4px 6px 4px 4px; }
 
 /* ---------- version tab bar ---------- */
 .versions {
-  position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 50;
+  display: none; position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 50;
   display: flex; gap: 4px; padding: 5px; border-radius: 999px;
   background: rgba(20, 22, 26, .62); -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3);
   box-shadow: 0 8px 30px rgba(0, 0, 0, .28), inset 0 0 0 1px rgba(255, 255, 255, .12);
@@ -350,4 +413,4 @@ button.chip { padding: 4px 6px 4px 4px; }
 .versions button:hover { color: #fff; }
 .versions button[aria-pressed="true"] { background: #fff; color: #111; }
 .versions button:focus-visible { outline: 2px solid rgba(255, 255, 255, .9); outline-offset: 2px; }
-@media (max-width: 760px) { .versions { left: 12px; bottom: max(12px, env(safe-area-inset-bottom)); } .versions button { min-width: 38px; padding: 0 10px; } }
+@media (max-width: 760px) { .versions { display: flex; left: 12px; bottom: max(12px, env(safe-area-inset-bottom)); } .versions button { min-width: 38px; padding: 0 10px; } }

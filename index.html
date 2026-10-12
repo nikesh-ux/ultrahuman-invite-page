@@ -7,8 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261012-68">
-<script>document.documentElement.classList.add("js"); try { localStorage.removeItem("uh-theme"); } catch (e) {}</script>
+<link rel="stylesheet" href="styles.css?v=20261012-104">
+<script>document.documentElement.classList.add("js"); try { localStorage.removeItem("uh-theme"); var l = localStorage.getItem("uh-layout"); document.documentElement.setAttribute("data-layout", l === "a" ? "a" : "b"); } catch (e) { document.documentElement.setAttribute("data-layout", "b"); }</script>
 </head>
 <body>
 
@@ -71,15 +71,18 @@
 </section>
 
 <section class="rings" aria-label="Choose your ring">
-  <div class="switch" role="group" aria-label="Choose a ring">
-    <button type="button" class="is-on" data-product="pro" aria-pressed="true">Ring PRO</button>
-    <button type="button" data-product="air" aria-pressed="false">Ring AIR</button>
-  </div>
+  <div class="pgroup">
+    <div class="rail">
+      <div class="switch" role="group" aria-label="Choose a ring">
+      <button type="button" class="is-on" data-product="pro" aria-pressed="true">Ring PRO</button>
+      <button type="button" data-product="air" aria-pressed="false">Ring AIR</button>
+    </div>
+    </div>
   <div class="cards" data-active="pro">
+    <div class="intro" data-p="pro"><h2>Ring PRO</h2><button type="button" class="card-code in-intro" data-code="Chase10" aria-label="Copy promo code Chase10"><strong class="cc-code">Chase10</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button></div>
     <article class="card" data-p="pro">
       <div class="media-wrap">
         <a class="card-media" href="#" aria-label="Ultrahuman Ring PRO"><img alt="Ultrahuman Ring PRO" src="assets/ring-pro.png" style="--dy:-2.16px"></a>
-        <button type="button" class="card-code" data-code="Chase10" aria-label="Copy promo code Chase10"><strong class="cc-code">Chase10</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
       </div>
       <div class="card-body">
         <div class="card-text">
@@ -87,17 +90,17 @@
           <p>Our most advanced ring yet. A unibody fighter jet-grade titanium build — made for serious tracking.</p>
         </div>
         <div class="card-foot">
-          <div class="price"><div class="price-row"><s>₹44,999</s><strong>₹40,499.10</strong></div><span>Tax incl.</span></div>
+          <div class="price"><div class="price-row"><s>₹44,999</s><strong>₹40,499.10</strong><span>Tax incl.</span></div><div class="price-meta"><button type="button" class="card-code in-price" data-code="Chase10" aria-label="Copy promo code Chase10"><strong class="cc-code">Chase10</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button></div></div>
           <a class="pill pill-blue" href="#">Buy now</a>
         </div>
       </div>
       <span class="badge">10% off</span>
     </article>
 
+    <div class="intro" data-p="air"><h2>Ring AIR</h2><button type="button" class="card-code in-intro" data-code="Chase32" aria-label="Copy promo code Chase32"><strong class="cc-code">Chase32</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button></div>
     <article class="card" data-p="air">
       <div class="media-wrap">
         <a class="card-media" href="#" aria-label="Ultrahuman Ring AIR"><img alt="Ultrahuman Ring AIR" src="assets/ring-air.png" style="--dy:1.84px"></a>
-        <button type="button" class="card-code" data-code="Chase32" aria-label="Copy promo code Chase32"><strong class="cc-code">Chase32</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
       </div>
       <div class="card-body">
         <div class="card-text">
@@ -105,12 +108,74 @@
           <p>The world's most comfortable sleep tracker. Accurately measures your sleep, movement and recovery.</p>
         </div>
         <div class="card-foot">
-          <div class="price"><div class="price-row"><s>₹28,499</s><strong>₹19,379.32</strong></div><span>Tax incl.</span></div>
+          <div class="price"><div class="price-row"><s>₹28,499</s><strong>₹19,379.32</strong><span>Tax incl.</span></div><div class="price-meta"><button type="button" class="card-code in-price" data-code="Chase32" aria-label="Copy promo code Chase32"><strong class="cc-code">Chase32</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button></div></div>
           <a class="pill pill-blue" href="#">Buy now</a>
         </div>
       </div>
       <span class="badge">32% off</span>
     </article>
+  </div>
+  </div>
+  <div class="pgroup">
+    <div class="rail">
+      <div class="switch" role="group" aria-label="Choose a product">
+      <button type="button" class="is-on" data-product="home" aria-pressed="true">Home</button>
+      <button type="button" data-product="m1" aria-pressed="false">M1</button>
+      <button type="button" data-product="bv" aria-pressed="false">Blood Vision</button>
+    </div>
+    </div>
+  <div class="cards" data-active="home">
+    <div class="intro" data-p="home"><h2>Home</h2><button type="button" class="card-code in-intro" data-code="Chase10" aria-label="Copy promo code Chase10"><strong class="cc-code">Chase10</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button></div>
+    <article class="card" data-p="home">
+      <div class="media-wrap">
+        <a class="card-media is-photo" href="#" aria-label="Ultrahuman Home"><img alt="Ultrahuman Home" src="assets/more/home.jpg" loading="lazy" style="object-position:50% 56%"></a>
+      </div>
+      <div class="card-body">
+        <div class="card-text">
+          <h2>Ultrahuman Home</h2>
+          <p>The world&rsquo;s most advanced ambient sleep monitor. Tracks air, light and sound to help you rest better.</p>
+        </div>
+        <div class="card-foot">
+          <div class="price"><div class="price-row"><strong>₹54,999</strong><span>Tax incl.</span></div><div class="price-meta"><button type="button" class="card-code in-price" data-code="Chase10" aria-label="Copy promo code Chase10"><strong class="cc-code">Chase10</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button></div></div>
+          <a class="pill pill-blue" href="#">Buy now</a>
+        </div>
+      </div>
+    </article>
+
+    <div class="intro" data-p="m1"><h2>M1</h2><button type="button" class="card-code in-intro" data-code="Chase10" aria-label="Copy promo code Chase10"><strong class="cc-code">Chase10</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button></div>
+    <article class="card" data-p="m1">
+      <div class="media-wrap">
+        <a class="card-media is-photo" href="#" aria-label="Ultrahuman M1"><img alt="Ultrahuman M1" src="assets/more/m1.jpg" loading="lazy" style="object-position:50% 28%"></a>
+      </div>
+      <div class="card-body">
+        <div class="card-text">
+          <h2>Ultrahuman M1</h2>
+          <p>Real-time glucose monitoring. Understand how food and movement shape your metabolic health.</p>
+        </div>
+        <div class="card-foot">
+          <div class="price"><div class="price-row"><strong>From ₹4,699</strong><span>Tax incl.</span></div><div class="price-meta"><button type="button" class="card-code in-price" data-code="Chase10" aria-label="Copy promo code Chase10"><strong class="cc-code">Chase10</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button></div></div>
+          <a class="pill pill-blue" href="#">Buy now</a>
+        </div>
+      </div>
+    </article>
+
+    <div class="intro" data-p="bv"><h2>Blood Vision</h2><button type="button" class="card-code in-intro" data-code="Chase10" aria-label="Copy promo code Chase10"><strong class="cc-code">Chase10</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button></div>
+    <article class="card" data-p="bv">
+      <div class="media-wrap">
+        <a class="card-media is-photo is-white" href="#" aria-label="Ultrahuman Blood Vision"><img alt="Ultrahuman Blood Vision" src="assets/more/blood-vision.jpg" loading="lazy" style="object-position:50% 80%"></a>
+      </div>
+      <div class="card-body">
+        <div class="card-text">
+          <h2>Ultrahuman Blood Vision</h2>
+          <p>A comprehensive blood test to understand your blood markers in the context of lifestyle and longevity.</p>
+        </div>
+        <div class="card-foot">
+          <div class="price"><div class="price-row"><strong>From ₹649</strong><span>Tax incl.</span></div><div class="price-meta"><button type="button" class="card-code in-price" data-code="Chase10" aria-label="Copy promo code Chase10"><strong class="cc-code">Chase10</strong><svg class="cc-ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.8V3.5a1.6 1.6 0 0 0-1.6-1.6H3.5A1.6 1.6 0 0 0 1.9 3.5v5.4a1.6 1.6 0 0 0 1.6 1.6h.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button></div></div>
+          <a class="pill pill-blue" href="#">Buy now</a>
+        </div>
+      </div>
+    </article>
+  </div>
   </div>
 </section>
 
@@ -268,6 +333,11 @@
 </footer>
 
 
+<nav class="versions" aria-label="Layout version (phones)">
+  <button type="button" data-layout="b" aria-pressed="true">v1</button>
+  <button type="button" data-layout="a" aria-pressed="false">v2</button>
+</nav>
+
 <script>
   // Cards ease in the first time they scroll into view.
   (function () {
@@ -280,25 +350,43 @@
         io.unobserve(e.target);
       });
     }, { threshold: 0.15 });
-    cards.forEach(function (c, i) { c.style.setProperty('--d', (350 + (i % 2) * 140) + 'ms'); io.observe(c); });
+    // Stagger left to right inside each row; the first row waits a beat on load, later rows start straight away when scrolled into view.
+    document.querySelectorAll('.cards').forEach(function (group, g) {
+      group.querySelectorAll('.card').forEach(function (c, i) { c.style.setProperty('--d', ((g === 0 ? 350 : 0) + i * (g === 0 ? 140 : 110)) + 'ms'); io.observe(c); });
+    });
   })();
 
-  // Phones show one product at a time; the toggle swaps which card is visible (PRO is the default).
+  // Phones: each toggle swaps which product of its group is visible (PRO and Home are the defaults).
   (function () {
-    var cards = document.querySelector('.cards'), btns = document.querySelectorAll('.switch button');
-    if (!cards || !btns.length) return;
-    btns.forEach(function (b) {
-      b.addEventListener('click', function () {
-        var key = b.getAttribute('data-product');
-        if (cards.getAttribute('data-active') === key) return;
-        cards.setAttribute('data-active', key);
-        btns.forEach(function (x) { var on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
-        var card = cards.querySelector('.card[data-p="' + key + '"]');
-        card.style.setProperty('--d', '0ms');
-        card.classList.remove('in'); void card.offsetWidth;
-        setTimeout(function () { card.classList.add('in'); }, 30);
+    document.querySelectorAll('.pgroup').forEach(function (group) {
+      var cards = group.querySelector('.cards'), btns = group.querySelectorAll('.switch button');
+      if (!cards || !btns.length) return;
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var key = b.getAttribute('data-product');
+          if (cards.getAttribute('data-active') === key) return;
+          cards.setAttribute('data-active', key);
+          var sw = b.parentNode; sw.scrollTo({ left: b.offsetLeft - (sw.clientWidth - b.offsetWidth) / 2, behavior: 'smooth' });
+          btns.forEach(function (x) { var on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+          var card = cards.querySelector('.card[data-p="' + key + '"]');
+          card.style.setProperty('--d', '0ms');
+          card.classList.remove('in'); void card.offsetWidth;
+          setTimeout(function () { card.classList.add('in'); }, 30);
+        });
       });
     });
+  })();
+
+  // Phone layout versions: v1 = toggle, one product at a time; v2 = heading rows, both products stacked.
+  (function () {
+    var root = document.documentElement, tabs = document.querySelectorAll('.versions button');
+    function set(l, save) {
+      root.setAttribute('data-layout', l);
+      tabs.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-layout') === l)); });
+      if (save) { try { localStorage.setItem('uh-layout', l); } catch (e) {} }
+    }
+    set(root.getAttribute('data-layout') === 'a' ? 'a' : 'b', false);
+    tabs.forEach(function (b) { b.addEventListener('click', function () { set(b.getAttribute('data-layout'), true); }); });
   })();
 
   // Promo-code chips on the product tiles (phones): tap to copy that product's code.
