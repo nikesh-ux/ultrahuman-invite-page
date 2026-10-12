@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261012-106">
+<link rel="stylesheet" href="styles.css?v=20261012-116">
 <script>document.documentElement.classList.add("js"); try { localStorage.removeItem("uh-theme"); var l = localStorage.getItem("uh-layout"); document.documentElement.setAttribute("data-layout", l === "a" ? "a" : "b"); } catch (e) { document.documentElement.setAttribute("data-layout", "b"); }</script>
 </head>
 <body>
@@ -71,7 +71,8 @@
 </section>
 
 <section class="rings" aria-label="Choose your ring">
-  <div class="pgroup">
+  <div class="pgroup" style="--n:2">
+    <div class="stage">
     <div class="rail">
       <div class="switch" role="group" aria-label="Choose a ring">
       <button type="button" class="is-on" data-product="pro" aria-pressed="true">Ring PRO</button>
@@ -115,8 +116,10 @@
       <span class="badge">32% off</span>
     </article>
   </div>
+    </div>
   </div>
-  <div class="pgroup">
+  <div class="pgroup" style="--n:3">
+    <div class="stage">
     <div class="rail">
       <div class="switch" role="group" aria-label="Choose a product">
       <button type="button" class="is-on" data-product="home" aria-pressed="true">Home</button>
@@ -176,6 +179,7 @@
       </div>
     </article>
   </div>
+    </div>
   </div>
 </section>
 
@@ -356,25 +360,38 @@
     });
   })();
 
-  // Phones: each toggle swaps which product of its group is visible (PRO and Home are the defaults).
+  // Phones (layout v1): each toggle swaps which product of its group is shown. The pill slides and the cards cross-fade.
   (function () {
+    var groups = [];
     document.querySelectorAll('.pgroup').forEach(function (group) {
-      var cards = group.querySelector('.cards'), btns = group.querySelectorAll('.switch button');
-      if (!cards || !btns.length) return;
-      btns.forEach(function (b) {
-        b.addEventListener('click', function () {
-          var key = b.getAttribute('data-product');
-          if (cards.getAttribute('data-active') === key) return;
-          cards.setAttribute('data-active', key);
-          var sw = b.parentNode; sw.scrollTo({ left: b.offsetLeft - (sw.clientWidth - b.offsetWidth) / 2, behavior: 'smooth' });
-          btns.forEach(function (x) { var on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
-          var card = cards.querySelector('.card[data-p="' + key + '"]');
-          card.style.setProperty('--d', '0ms');
-          card.classList.remove('in'); void card.offsetWidth;
-          setTimeout(function () { card.classList.add('in'); }, 30);
-        });
-      });
+      var cards = group.querySelector('.cards'), sw = group.querySelector('.switch');
+      if (!cards || !sw) return;
+      var btns = [].slice.call(sw.querySelectorAll('button')), thumb = document.createElement('span');
+      thumb.className = 'thumb'; sw.insertBefore(thumb, sw.firstChild); sw.classList.add('has-thumb');
+      function place() {
+        var on = sw.querySelector('button.is-on');
+        if (!on || !on.offsetWidth) return;
+        thumb.style.left = on.offsetLeft + 'px'; thumb.style.width = on.offsetWidth + 'px';
+      }
+      function activate(i) {
+        var b = btns[i], key = b.getAttribute('data-product');
+        if (cards.getAttribute('data-active') === key) return;
+        sw.classList.add('is-anim'); clearTimeout(sw._t); sw._t = setTimeout(function () { sw.classList.remove('is-anim'); }, 600);
+        cards.setAttribute('data-active', key);
+        btns.forEach(function (x) { var on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+        sw.scrollTo({ left: b.offsetLeft - (sw.clientWidth - b.offsetWidth) / 2, behavior: 'smooth' });
+        var card = cards.querySelector('.card[data-p="' + key + '"]'); if (card) card.classList.add('in');
+        place();
+      }
+      btns.forEach(function (b, i) { b.addEventListener('click', function () { activate(i); }); });
+      groups.push({ place: place });
     });
+    function placeAll() { groups.forEach(function (g) { g.place(); }); }
+    addEventListener('resize', placeAll);
+    addEventListener('load', placeAll);
+    placeAll();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeAll);
+    document.querySelectorAll('.versions button').forEach(function (b) { b.addEventListener('click', function () { setTimeout(placeAll, 30); }); });
   })();
 
   // Phone layout versions: v1 = toggle, one product at a time; v2 = heading rows, both products stacked.
